@@ -8,7 +8,13 @@ var async = require('async');
 var utils = require('./utils');
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .command('pull', 'pull a git repository and install npm dependencies')
+  .command('pull', 'pull a git repository and install npm dependencies', function (yargs) {
+    argv = yargs.option('branch', {
+      alias: 'b',
+      type: 'string',
+      description: 'remote branch name to pull'
+    }).help('help').argv;
+  })
   .command('fetch', 'fetch a git repository and install npm dependencies (coming soon)')
   .command('clone', 'clone a git repository and install ' +
   'npm dependencies (coming soon)', function (yargs) {
@@ -29,7 +35,8 @@ shell.config = shellConfig;
 function executePull(done) {
   if (utils.isGitRepo()) {
     console.log('Pulling Git Repository...'.blue);
-    var args = utils.prepareArguments(argv);
+    var args = argv.b ? 'origin ' + argv.b : utils.prepareArguments(argv);
+
     shell.exec('git pull ' + args, {
       silent: true,
       async: true
@@ -52,6 +59,9 @@ function executeGitOperation(done) {
 
 function installNPMPackages(gitOpOutput, done) {
   console.log('Git pull ends successfully!!'.green);
+  if (argv.v) {
+    utils.printLog('git', gitOpOutput);
+  }
   console.log('Installing NPM Modules...'.blue);
 
   shell.exec('npm i ', {
@@ -59,6 +69,9 @@ function installNPMPackages(gitOpOutput, done) {
     async: true
   }, function (exitCode, npmOutput) {
     if (!exitCode) {
+      if (argv.v) {
+        utils.printLog('npm', npmOutput);
+      }
       return done(null, npmOutput);
     }
     return done(exitCode, npmOutput);

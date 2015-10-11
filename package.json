@@ -1,8 +1,7 @@
 {
   "name": "gtni",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Install your npm dependencies after git clone, fetch or pull",
-  "private": true,
   "preferGlobal": true,
   "bin": {
     "gtni": "index.js"
@@ -32,5 +31,14 @@
   "bugs": {
     "url": "https://github.com/nmrony/gtni/issues",
     "email": "pro.nmrony@gmail.com"
-  }
+  },
+  "homepage": "https://github.com/nmrony/gtni",
+  "keywords": [
+    "git",
+    "npm",
+    "git push",
+    "git fetch",
+    "git pull",
+    "npm install"
+  ]
 }
