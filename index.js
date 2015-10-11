@@ -30,7 +30,6 @@ function executePull(done) {
   if (utils.isGitRepo()) {
     var args = utils.prepareArguments(argv);
     shell.exec('git pull ' + args, {
-      async: true,
       silent: true
     }, function (exitCode, output) {
       if(!exitCode){
@@ -54,7 +53,6 @@ function installNPMPackages(gitOpOutput, done) {
   console.log('Installing NPM Modules...'.yellow);
 
   shell.exec('npm i ', {
-    async: true,
     silent: true
   }, function (exitCode, npmOutput) {
     if (!exitCode) {
