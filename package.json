@@ -13,6 +13,10 @@
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "async": "^1.4.2",
+    "colors": "^1.1.2",
+    "lodash": "^3.10.1",
+    "shelljs": "^0.5.3",
     "yargs": "^3.27.0"
   },
   "devDependencies": {
@@ -21,12 +25,12 @@
     "eslint-config-airbnb": "^0.1.0",
     "eslint-plugin-react": "^3.5.1"
   },
-  "repository" :{
-    "type" : "git",
-    "url" : "https+ssh://github.com/nmrony/gtni.git"
+  "repository": {
+    "type": "git",
+    "url": "https+ssh://github.com/nmrony/gtni.git"
   },
   "bugs": {
-    "url" : "https://github.com/nmrony/gtni/issues",
-    "email" : "pro.nmrony@gmail.com"
+    "url": "https://github.com/nmrony/gtni/issues",
+    "email": "pro.nmrony@gmail.com"
   }
 }
