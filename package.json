@@ -1,7 +1,7 @@
 {
   "name": "gtni",
   "version": "1.0.0",
-  "description": "Install your npm dependencies after git clone, fetch or pull", ,
+  "description": "Install your npm dependencies after git clone, fetch or pull",
   "preferGlobal": true,
   "bin": {
     "gtni": "index.js"
