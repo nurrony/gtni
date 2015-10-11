@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "echo \"This package depends on git. Please install it if you do not have it yet\""
+    "preinstall": "echo \"This package depends on git. Please install it if you do not have it yet\"",
+    "postinstall": "exit 0"
   },
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
