@@ -28,9 +28,11 @@ shell.config = shellConfig;
 
 function executePull(done) {
   if (utils.isGitRepo()) {
+    console.log('Pulling Git Repository...'.blue);
     var args = utils.prepareArguments(argv);
     shell.exec('git pull ' + args, {
-      silent: true
+      silent: true,
+      async: true
     }, function (exitCode, output) {
       if(!exitCode){
         return done(null, output);
@@ -49,18 +51,18 @@ function executeGitOperation(done) {
 }
 
 function installNPMPackages(gitOpOutput, done) {
-  console.log(gitOpOutput.cyan);
-  console.log('Installing NPM Modules...'.yellow);
+  console.log('Git pull ends successfully!!'.green);
+  console.log('Installing NPM Modules...'.blue);
 
   shell.exec('npm i ', {
-    silent: true
+    silent: true,
+    async: true
   }, function (exitCode, npmOutput) {
     if (!exitCode) {
       return done(null, npmOutput);
     }
     return done(exitCode, npmOutput);
   });
-  return done(null, gitOpOutput);
 }
 
 async.waterfall([
