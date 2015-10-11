@@ -1,4 +1,4 @@
-gitni: Runs `npm install` after Git Operations
+gtni: Runs `npm install` after Git Operations
 ----------------------------------------------
 Run `npm install` after `git pull`
 
