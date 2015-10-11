@@ -31,5 +31,14 @@
   "bugs": {
     "url": "https://github.com/nmrony/gtni/issues",
     "email": "pro.nmrony@gmail.com"
-  }
+  },
+  "homepage": "https://github.com/nmrony/gtni",
+  "keywords": [
+    "git",
+    "npm",
+    "git push",
+    "git fetch",
+    "git pull",
+    "npm install"
+  ]
 }
