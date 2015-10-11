@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Install your npm dependencies after git clone, fetch or pull",
   "private": true,
   "preferGlobal": true,

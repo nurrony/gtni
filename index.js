@@ -8,9 +8,10 @@ var async = require('async');
 var utils = require('./utils');
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .command('pull', 'pull a git repository')
-  .command('fetch', 'fetch a git repository')
-  .command('clone', 'clone a git repository', function (yargs) {
+  .command('pull', 'pull a git repository and install npm dependencies')
+  .command('fetch', 'fetch a git repository and install npm dependencies (coming soon)')
+  .command('clone', 'clone a git repository and install ' +
+  'npm dependencies (coming soon)', function (yargs) {
       argv = yargs.option('url', {
         alias: 'u',
         demand: true,
@@ -18,10 +19,9 @@ var argv = require('yargs')
       }).help('help').argv;
     })
   .demand(1, 'must provide a valid command')
-  .example('$0 pull [git-options]', 'pull the repository')
+  .example('$0 pull [git-options]', 'pull current git repository and install npm dependencies')
   .help('h')
   .alias('h', 'help')
-  .epilog('Copyright ⓒ 2015')
   .argv;
 
 shell.config = shellConfig;
