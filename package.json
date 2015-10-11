@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Install your npm dependencies with gtni as soon you pull, fetch or clone a git repo",
   "preferGlobal": true,
   "bin": {
@@ -33,7 +33,7 @@
     "url": "https://github.com/nmrony/gtni/issues",
     "email": "pro.nmrony@gmail.com"
   },
-  "homepage": "https://github.com/nmrony/gtni",
+  "homepage": "https://github.com/nmrony/gtni#readme",
   "keywords": [
     "git",
     "npm",
