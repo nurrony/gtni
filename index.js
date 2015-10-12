@@ -11,7 +11,7 @@ var gitops = require('./gitops');
 
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .command('pull', 'pull a git repository and install npm dependencies', function (yargs) {
+  .command('pull', 'git pull and install npm dependencies', function (yargs) {
     argv = yargs.option({
       'branch': {
         alias: 'b',
@@ -23,11 +23,26 @@ var argv = require('yargs')
         alias: 'repo',
         type: 'string',
         default: false,
-        description: 'The "remote" repository that is the source of a fetch or pull operation'
+        description: 'The "remote" repository that is the source'
       }
     }).help('help').argv;
   })
-  .command('fetch', 'fetch a git repository and install npm dependencies (coming soon)')
+  .command('fetch', 'git fetch and install npm dependencies', function (yargs) {
+    argv = yargs.option({
+      'branch': {
+        alias: 'b',
+        type: 'string',
+        default: false,
+        description: 'remote branch name to fetch'
+      },
+      'repository': {
+        alias: 'repo',
+        type: 'string',
+        default: false,
+        description: 'The "remote" repository that is the source'
+      }
+    }).help('help').argv;
+  })
   .command('clone', 'clone a git repository and install ' +
   'npm dependencies (coming soon)', function (yargs) {
     argv = yargs.option('url', {
@@ -37,7 +52,7 @@ var argv = require('yargs')
     }).help('help').argv;
   })
   .demand(1, 'must provide a valid command')
-  .example('$0 pull [git-options]', 'pull current git repository and install npm dependencies')
+  .example('$0 pull [git-options]', 'git pull and install npm packages')
   .help('h')
   .alias('h', 'help')
   .argv;
@@ -50,6 +65,8 @@ function executeGitOperation(done) {
   switch (command) {
     case 'pull':
       return gitops.pull(argv, done);
+    case 'fetch':
+      return gitops.fetch(argv, done);
   }
 }
 
