@@ -2,8 +2,7 @@ gtni
 ====
 Install your npm dependencies with `gtni` as soon you `pull`, `fetch` or `clone` a git repo.
 
-**This repo is actively under development. Only supports `pull` command for now.
-Other functionality is coming soon. Please check Todo list before use.**
+> **This repo is actively under development. Please check Todo list before use.**
 
 Installation
 -------------
