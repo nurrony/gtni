@@ -19,10 +19,18 @@ var Utils = (function () {
   }
 
   function prepareArguments(args) {
-    return Object.keys(lodash.omit(args, ['$0', 'h', 'help', '_', 'b', 'branch']))
-      .map(function (value) {
-        return value.length > 1 ? '--' + value : '-' + value;
-      }).slice('').join(' ');
+    return Object.keys(lodash.omit(args, [
+      '$0',
+      'h',
+      'help',
+      '_',
+      'b',
+      'branch',
+      'repo',
+      'repository'
+    ])).map(function (value) {
+      return value.length > 1 ? '--' + value : '-' + value;
+    }).slice('').join(' ');
   }
 
   return {

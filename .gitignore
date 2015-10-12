@@ -10,8 +10,8 @@ Session.vim
 ### Example user template
 
 # IntelliJ project files
-.idea
-*.iml
+../.idea
+.idea/gtni.iml
 out
 gen### OSX template
 .DS_Store
