@@ -52,7 +52,7 @@ var argv = require('yargs')
     }).help('help').argv;
   })
   .demand(1, 'must provide a valid command')
-  .example('$0 pull [git-options]', 'pull current git repository and install npm dependencies')
+  .example('$0 (pull | fetch) [git-options]', 'pull current branch and install npm packages')
   .help('h')
   .alias('h', 'help')
   .argv;
