@@ -1,3 +1,4 @@
 module.exports = {
-  pull: require('./pull').pull
+  pull: require('./pull').pull,
+  fetch: require('./fetch').fetch
 };

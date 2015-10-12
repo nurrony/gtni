@@ -65,6 +65,8 @@ function executeGitOperation(done) {
   switch (command) {
     case 'pull':
       return gitops.pull(argv, done);
+    case 'fetch':
+      return gitops.fetch(argv, done);
   }
 }
 
