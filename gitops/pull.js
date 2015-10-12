@@ -2,7 +2,7 @@
 var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
-var gpull = (function () {
+var GitPull = (function () {
 
   'use strict';
 
@@ -17,7 +17,7 @@ var gpull = (function () {
       } else {
         args = utils.prepareArguments(argv);
       }
-      
+
       shell.exec('git pull ' + args, {
         silent: true,
         async: true
@@ -35,4 +35,4 @@ var gpull = (function () {
   }
 })();
 
-module.exports = gpull;
+module.exports = GitPull;
