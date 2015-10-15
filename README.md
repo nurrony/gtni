@@ -1,5 +1,7 @@
 gtni
 ====
+[![NPM](https://nodei.co/npm/gtni.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gtni)
+
 Install your npm dependencies with `gtni` as soon you `pull`, `fetch` or `clone` a git repo.
 
 > **This repo is actively under development. Please check Todo list before use.**
