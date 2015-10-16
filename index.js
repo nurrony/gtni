@@ -11,6 +11,10 @@ var gitops = require('./gitops');
 
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
+  .version(function() {
+    return 'gtni version ' + require('./package').version;
+  })
+  .alias('v', 'version')
   .command('pull', 'git pull and install npm dependencies', function (yargs) {
     argv = yargs.option({
       'branch': {
