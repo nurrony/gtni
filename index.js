@@ -11,7 +11,7 @@ var gitops = require('./gitops');
 
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .version(function() {
+  .version(function () {
     return 'gtni version ' + require('./package').version;
   })
   .alias('v', 'version')
@@ -49,10 +49,13 @@ var argv = require('yargs')
   })
   .command('clone', 'clone a git repository and install ' +
   'npm dependencies (coming soon)', function (yargs) {
-    argv = yargs.option('url', {
-      alias: 'u',
-      demand: true,
-      description: 'git repository url to clone'
+    argv = yargs.option({
+      'branch': {
+        alias: 'b',
+        type: 'string',
+        default: false,
+        description: 'remote branch name or SHA1 to clone'
+      }
     }).help('help').argv;
   })
   .demand(1, 'must provide a valid command')
@@ -71,6 +74,10 @@ function executeGitOperation(done) {
       return gitops.pull(argv, done);
     case 'fetch':
       return gitops.fetch(argv, done);
+    case 'clone':
+      return gitops.clone(argv, done);
+    default:
+      return require('yargs').showHelp();
   }
 }
 

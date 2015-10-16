@@ -9,6 +9,10 @@ var Utils = (function () {
     return shell.which('git');
   }
 
+  function cloneDirectory() {
+
+  }
+
   function isUnderGitRepo() {
     return shell.exec('git rev-parse --is-inside-work-tree', {silent: true}).output;
   }
