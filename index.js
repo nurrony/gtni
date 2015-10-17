@@ -48,13 +48,13 @@ var argv = require('yargs')
     }).help('help').argv;
   })
   .command('clone', 'clone a git repository and install ' +
-  'npm dependencies (coming soon)', function (yargs) {
+  'npm dependencies', function (yargs) {
     argv = yargs.option({
       'branch': {
         alias: 'b',
         type: 'string',
         default: false,
-        description: 'remote branch name or SHA1 to clone'
+        description: 'remote branch name to clone'
       }
     }).help('help').argv;
   })
