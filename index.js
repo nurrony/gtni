@@ -3,7 +3,7 @@
 'use strict';
 
 var shellConfig = require('./shellconfig');
-var colors = require('colors');
+var chalk = require('chalk');
 var shell = require('shelljs');
 var async = require('async');
 var utils = require('./libs/utils');
@@ -84,7 +84,7 @@ function executeGitOperation(done) {
 
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
-  console.log('Git '+ cmd +' ends successfully!!'.green);
+  chalk.green('Git '+ cmd +' ends successfully!!');
   if (argv.v) {
     utils.printLog('git', gitOpOutput);
   }
@@ -105,7 +105,6 @@ async.waterfall([
   if (err) {
     console.log('Error Happened'.underline.red);
     console.log(cmdOutput.red);
-    console.log('☹ ☹ ☹ ☹ ☹ ☹ ☹ ☹ ☹'.blue);
     return;
   }
   console.log('♫♫♫ Laa laa laa!! npm modules also installed!!!☺ ☺ ☺ ☺'.green);
