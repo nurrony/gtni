@@ -3,7 +3,6 @@
 'use strict';
 
 var shellConfig = require('./shellconfig');
-var chalk = require('chalk');
 var shell = require('shelljs');
 var async = require('async');
 var utils = require('./libs/utils');
@@ -84,9 +83,9 @@ function executeGitOperation(done) {
 
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
-  chalk.green('Git '+ cmd +' ends successfully!!');
+  utils.log.success('git '+ cmd +' ends successfully!!');
   if (argv.v) {
-    utils.printLog('git', gitOpOutput);
+    utils.log.info(gitOpOutput);
   }
 
   if (cmd === 'clone') {
@@ -103,10 +102,9 @@ async.waterfall([
   installNPMPackages
 ], function (err, cmdOutput) {
   if (err) {
-    console.log('Error Happened'.underline.red);
-    console.log(cmdOutput.red);
+    utils.log.error(cmdOutput);
     return;
   }
-  console.log('♫♫♫ Laa laa laa!! npm modules also installed!!!☺ ☺ ☺ ☺'.green);
+  utils.log.success('npm modules installed successfully!!!');
 });
 
