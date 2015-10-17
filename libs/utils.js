@@ -2,6 +2,7 @@
 var shell = require('shelljs');
 var colors = require('colors');
 var lodash = require('lodash');
+var url = require('url');
 
 var Utils = (function () {
 
@@ -9,8 +10,9 @@ var Utils = (function () {
     return shell.which('git');
   }
 
-  function cloneDirectory() {
-
+  function cloneDirectory(gitargs) {
+    var cmd = (gitargs || []).shift();
+    var url = parseUrl(gitargs[0])
   }
 
   function isUnderGitRepo() {
@@ -41,7 +43,8 @@ var Utils = (function () {
     isGitInstalled: checkForGit,
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
-    printLog: printLog
+    printLog: printLog,
+    cloneDir: cloneDirectory
   };
 
 })();
