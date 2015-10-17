@@ -2,6 +2,7 @@
 var shell = require('shelljs');
 var colors = require('colors');
 var lodash = require('lodash');
+var urlParser = require('git-url-parse');
 
 var Utils = (function () {
 
@@ -9,8 +10,8 @@ var Utils = (function () {
     return shell.which('git');
   }
 
-  function cloneDirectory() {
-
+  function getRepoName(repoUrl) {
+    return urlParser(repoUrl).name;
   }
 
   function isUnderGitRepo() {
@@ -23,7 +24,8 @@ var Utils = (function () {
   }
 
   function prepareArguments(args) {
-    return Object.keys(lodash.omit(args, [
+
+    var gitOptions = lodash.omit(args, [
       '$0',
       'h',
       'help',
@@ -32,16 +34,23 @@ var Utils = (function () {
       'branch',
       'repo',
       'repository'
-    ])).map(function (value) {
-      return value.length > 1 ? '--' + value : '-' + value;
-    }).slice('').join(' ');
+    ]);
+
+    return lodash.map(gitOptions, function (value, key) {
+      if (typeof value === 'boolean') {
+        return key.length > 1 ? '--' + key : '-' + key;
+      } else {
+        return key.length > 1 ? '--' + key + ' ' + value : '-' + key + ' ' + value;
+      }
+    }).join(' ');
   }
 
   return {
     isGitInstalled: checkForGit,
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
-    printLog: printLog
+    printLog: printLog,
+    getRepoName: getRepoName
   };
 
 })();
