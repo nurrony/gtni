@@ -36,4 +36,5 @@ Todo List
 - [x] Pull support for most used `git pull` options
 - [x] Fetch support for most used `git fetch` options
 - [x] Support for `git clone`
+- [ ] **NODE_ENV** support
 - [ ] Support for merge options in `git pull`
