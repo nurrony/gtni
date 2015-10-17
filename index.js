@@ -3,11 +3,11 @@
 'use strict';
 
 var shellConfig = require('./shellconfig');
-var colors = require('colors');
 var shell = require('shelljs');
 var async = require('async');
 var utils = require('./libs/utils');
 var gitops = require('./gitops');
+var npmops = require('./npm');
 
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
@@ -48,13 +48,13 @@ var argv = require('yargs')
     }).help('help').argv;
   })
   .command('clone', 'clone a git repository and install ' +
-  'npm dependencies (coming soon)', function (yargs) {
+  'npm dependencies', function (yargs) {
     argv = yargs.option({
       'branch': {
         alias: 'b',
         type: 'string',
         default: false,
-        description: 'remote branch name or SHA1 to clone'
+        description: 'remote branch name to clone'
       }
     }).help('help').argv;
   })
@@ -82,24 +82,19 @@ function executeGitOperation(done) {
 }
 
 function installNPMPackages(gitOpOutput, done) {
-  console.log('Git pull ends successfully!!'.green);
+  var cmd = argv._[0];
+  utils.log.success('git '+ cmd +' ends successfully!!');
   if (argv.v) {
-    utils.printLog('git', gitOpOutput);
+    utils.log.info(gitOpOutput);
   }
-  console.log('Installing NPM Modules...'.blue);
 
-  shell.exec('npm i ', {
-    silent: true,
-    async: true
-  }, function (exitCode, npmOutput) {
-    if (!exitCode) {
-      if (argv.v) {
-        utils.printLog('npm', npmOutput);
-      }
-      return done(null, npmOutput);
-    }
-    return done(exitCode, npmOutput);
-  });
+  if (cmd === 'clone') {
+    var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
+    shell.cd(cloneDir + '/');
+    return npmops.install(done);
+  } else {
+    return npmops.install(done);
+  }
 }
 
 async.waterfall([
@@ -107,11 +102,9 @@ async.waterfall([
   installNPMPackages
 ], function (err, cmdOutput) {
   if (err) {
-    console.log('Error Happened'.underline.red);
-    console.log(cmdOutput.red);
-    console.log('☹ ☹ ☹ ☹ ☹ ☹ ☹ ☹ ☹'.blue);
+    utils.log.error(cmdOutput);
     return;
   }
-  console.log('♫♫♫ Laa laa laa!! npm modules also installed!!!☺ ☺ ☺ ☺'.green);
+  utils.log.success('npm modules installed successfully!!!');
 });
 

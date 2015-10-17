@@ -8,17 +8,17 @@ var GitClone = (function () {
   function executeClone(argv, done) {
 
     var args = '';
-    console.log('Under develop');
-    //var dir = utils.cloneDir();
+    var repoNPath = argv._[1] + ' ' + (typeof argv._[2] === 'undefined' ? '' : argv._[2]);
+
+    utils.log.info('Cloning your repository...');
+
     if (argv.b) {
       args = '-b ' + argv.b;
-    } else if (argv.repo) {
-      args = argv.repo;
     } else {
       args = utils.prepareArguments(argv);
     }
-    console.log('args', args);
-    /*shell.exec('git clone ' + args, {
+
+    shell.exec('git clone ' + args + ' ' + repoNPath, {
       silent: true,
       async: true
     }, function (exitCode, output) {
@@ -26,7 +26,7 @@ var GitClone = (function () {
         return done(null, output);
       }
       return done(exitCode, output);
-    });*/
+    });
   }
 
   return {
