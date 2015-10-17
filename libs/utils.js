@@ -1,10 +1,22 @@
 'use strict';
 var shell = require('shelljs');
-var colors = require('colors');
+var chalk = require('chalk');
 var lodash = require('lodash');
 var urlParser = require('git-url-parse');
 
 var Utils = (function () {
+
+  var logger = {
+    info: function (msg) {
+      console.log(chalk.cyan(msg));
+    },
+    error: function (msg) {
+      console.log(chalk.bold.underline.red('Error'), '\n', chalk.red(msg));
+    },
+    success: function (msg) {
+      console.log(chalk.green(msg));
+    }
+  };
 
   function checkForGit() {
     return shell.which('git');
@@ -16,11 +28,6 @@ var Utils = (function () {
 
   function isUnderGitRepo() {
     return shell.exec('git rev-parse --is-inside-work-tree', {silent: true}).output;
-  }
-
-  function printLog(type, output) {
-    console.log(type.bold.underline.blue + ' Log'.bold.underline.blue);
-    console.log(output.magenta);
   }
 
   function prepareArguments(args) {
@@ -49,8 +56,8 @@ var Utils = (function () {
     isGitInstalled: checkForGit,
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
-    printLog: printLog,
-    getRepoName: getRepoName
+    getRepoName: getRepoName,
+    log: logger
   };
 
 })();

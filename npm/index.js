@@ -1,11 +1,12 @@
 
 var shell = require('shelljs');
+var utils = require('./../libs/utils');
 
 var NPMOps = (function () {
   'use strict';
 
   function executeInstall(done) {
-    console.log('Installing NPM Modules...'.blue);
+    utils.log.info('Installing NPM Modules. It may take some time...');
 
     shell.exec('npm i ', {
       silent: true,

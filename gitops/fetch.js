@@ -8,7 +8,7 @@ var GitFetch = (function () {
 
   function executeFetch(argv, done) {
     if (utils.isGitRepo()) {
-      console.log('Fetching Git Repository...'.blue);
+      utils.log.info('Fetching Git Repository...');
       var args = '';
       if (argv.b){
         args = 'origin ' + argv.b;

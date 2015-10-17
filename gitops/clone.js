@@ -9,7 +9,8 @@ var GitClone = (function () {
 
     var args = '';
     var repoNPath = argv._[1] + ' ' + (typeof argv._[2] === 'undefined' ? '' : argv._[2]);
-    console.log('Cloning your repository...'.blue);
+
+    utils.log.info('Cloning your repository...');
 
     if (argv.b) {
       args = '-b ' + argv.b;

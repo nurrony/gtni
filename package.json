@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Install your npm dependencies with gtni as soon you pull, fetch or clone a git repo",
   "preferGlobal": true,
   "bin": {
@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "async": "^1.4.2",
-    "colors": "^1.1.2",
+    "chalk": "^1.1.1",
     "git-url-parse": "^4.0.0",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3",

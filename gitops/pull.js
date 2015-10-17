@@ -8,7 +8,7 @@ var GitPull = (function () {
 
   function executePull(argv, done) {
     if (utils.isGitRepo()) {
-      console.log('Pulling Git Repository...'.blue);
+      utils.log.info('Pulling Git Repository...');
       var args = '';
       if (argv.b){
         args = 'origin ' + argv.b;
