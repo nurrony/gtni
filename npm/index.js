@@ -6,9 +6,11 @@ var NPMOps = (function () {
   'use strict';
 
   function executeInstall(done) {
+
+    var env = process.env.NODE_ENV ? '--' + process.env.NODE_ENV : '';
     utils.log.info('Installing NPM Modules. It may take some time...');
 
-    shell.exec('npm i ', {
+    shell.exec('npm i ' + env, {
       silent: true,
       async: true
     }, function (exitCode, npmOutput) {
