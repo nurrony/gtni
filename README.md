@@ -1,6 +1,8 @@
 gtni
 ====
-[![NPM](https://nodei.co/npm/gtni.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gtni)
+[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
+
+[![version][npm-badge]][npm-url]
 
 Install your npm dependencies with `gtni` as soon you `pull`, `fetch` or `clone` a git repo.
 
@@ -25,7 +27,7 @@ Options:
   -v, --version  Show version number                                   [boolean]
 
 Examples:
-  gtni pull [git-options]  git pull and install npm packages
+  [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
 
 ```
 I need your help to improve this module. Please send me your valuable suggestions and advices. I am all ears.
@@ -38,3 +40,10 @@ Todo List
 - [x] Support for `git clone`
 - [x] **NODE_ENV** support for `npm install`
 - [ ] Support for merge options in `git pull`
+
+[npm-badge]: https://nodei.co/npm/gtni.png?compact=true
+[npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
+[npm-dependencies]: https://img.shields.io/david/nmrony/gtni.svg?style=flat-square
+[npm-dev-dependencies]: https://img.shields.io/david/dev/nmrony/gtni.svg?style=flat-square
+[npm-month-downloads]: https://img.shields.io/npm/dm/gtni.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/gtni
