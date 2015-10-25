@@ -3,6 +3,7 @@ var shell = require('shelljs');
 var chalk = require('chalk');
 var lodash = require('lodash');
 var urlParser = require('git-url-parse');
+var fs = require('fs');
 
 var Utils = (function () {
 
@@ -28,6 +29,10 @@ var Utils = (function () {
 
   function isUnderGitRepo() {
     return shell.exec('git rev-parse --is-inside-work-tree', {silent: true}).output;
+  }
+
+  function isFileExists(filewithPath, done) {
+    return fs.exists(filewithPath, done);
   }
 
   function prepareArguments(args) {
@@ -57,6 +62,7 @@ var Utils = (function () {
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
     getRepoName: getRepoName,
+    isFileExists: isFileExists,
     log: logger
   };
 

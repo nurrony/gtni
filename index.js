@@ -83,17 +83,33 @@ function executeGitOperation(done) {
 
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
-  utils.log.success('git '+ cmd +' ends successfully!!');
+  utils.log.success('git ' + cmd + ' ends successfully!!');
   if (argv.v) {
     utils.log.info(gitOpOutput);
   }
 
+  utils.log.info('Looking for package.json file in current directory');
+
   if (cmd === 'clone') {
     var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
     shell.cd(cloneDir + '/');
-    return npmops.install(done);
+    utils.isFileExists('./package.json', function (exists) {
+      if (!exists) {
+        return done(true, 'package.json not found. Please run gtni from your root ' +
+          'directory where package.json resides.');
+      }
+      utils.log.info('package.json found in the directory');
+      return npmops.install(done);
+    });
   } else {
-    return npmops.install(done);
+    utils.isFileExists('./package.json', function (exists) {
+      if (!exists) {
+        return done(true, 'package.json not found. Please run gtni from your root ' +
+          'directory where package.json resides.');
+      }
+      utils.log.info('package.json found in the directory');
+      return npmops.install(done);
+    });
   }
 }
 
