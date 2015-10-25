@@ -118,9 +118,9 @@ async.waterfall([
   installNPMPackages
 ], function (err, cmdOutput) {
   if (err) {
-    utils.log.error(cmdOutput);
-    return;
+    return utils.log.error(cmdOutput);
   }
-  utils.log.success('npm modules installed successfully!!!');
+
+  return utils.log.success('npm modules installed successfully!!!');
 });
 

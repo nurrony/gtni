@@ -1,10 +1,8 @@
 gtni
 ====
-[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
-
-[![version][npm-badge]][npm-url]
-
 Install your npm dependencies with `gtni` as soon you `pull`, `fetch` or `clone` a git repo.
+
+[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
 
 Installation
 -------------
