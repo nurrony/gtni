@@ -37,6 +37,7 @@ Todo List
 - [x] Fetch support for most used `git fetch` options
 - [x] Support for `git clone`
 - [x] **NODE_ENV** support for `npm install`
+- [ ] Support for read and install dependencies when project has multiple `package.json` files
 - [ ] Support for merge options in `git pull`
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
