@@ -2,7 +2,7 @@
 var shell = require('shelljs');
 var chalk = require('chalk');
 var lodash = require('lodash');
-var urlParser = require('git-url-parse');
+var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
 var async = require('async');
 var globule = require('globule');
@@ -48,7 +48,7 @@ var Utils = (function () {
   }
 
   function getRepoName(repoUrl) {
-    return urlParser(repoUrl).name;
+    return gitUrlParser(repoUrl).name;
   }
 
   function isUnderGitRepo() {
