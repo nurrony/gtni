@@ -93,9 +93,14 @@ function installNPMPackages(gitOpOutput, done) {
   if (cmd === 'clone') {
     var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
     shell.cd(cloneDir + '/');
-    utils.isFileExists('./package.json', function (exists) {
-      if (!exists) {
+
+    utils.packagePaths(function (error, packagePaths) {
+      if (error) {
         return done(true, 'package.json not found. Please run gtni from your root ' +
+          'directory where package.json resides.');
+      }
+      if (!packagePaths.length) {
+       return done(true, 'package.json not found. Please run gtni from your root ' +
           'directory where package.json resides.');
       }
       utils.log.info('package.json found in the directory');
