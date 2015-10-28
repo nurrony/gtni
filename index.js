@@ -96,14 +96,17 @@ function installNPMPackages(gitOpOutput, done) {
 
     utils.packagePaths(function (error, packagePaths) {
       if (error) {
-        return done(true, 'package.json not found. Please run gtni from your root ' +
-          'directory where package.json resides.');
+        return done(error);
       }
       if (!packagePaths.length) {
        return done(true, 'package.json not found. Please run gtni from your root ' +
           'directory where package.json resides.');
       }
-      utils.log.info('package.json found in the directory');
+      async.each(packagePaths, function(path, callback) {
+        //todo: iterate each path and run npm
+      }, function(err) {
+
+      });
       return npmops.install(done);
     });
   } else {
