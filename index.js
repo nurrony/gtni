@@ -86,6 +86,9 @@ function executeGitOperation(done) {
 }
 
 function executeNPMInstall(done) {
+
+  utils.log.info('listing all package.json files in this project...');
+
   utils.packagePaths(function (error, packagePaths) {
 
     if (error) {
@@ -96,18 +99,36 @@ function executeNPMInstall(done) {
       return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. Skipping dependency installation.');
     }
 
+    utils.log.info('Installing npm modules. It may take some time...');
+
     async.each(packagePaths, function (path, cb) {
       shell.cd(path);
       return npmops.install(function (exitCode, output) {
         if (exitCode) {
           errorLog.push(path + '/package.json');
+          if (argv.v) {
+            utils.log.info('Log for ' + path + '/package.json');
+            utils.log.error(output);
+          }
         }
+
+        if (argv.v) {
+          utils.log.info('Log for ' + path + 'package.json');
+          utils.log.info(output);
+        }
+
         return cb(false);
       });
     }, function (err) {
+
+      if(err) {
+        return done(err);
+      }
+
       if (errorLog.length) {
         return done(null, HAS_ERROR);
       }
+
       return done(null, NO_ERROR);
 
     });
@@ -120,8 +141,6 @@ function installNPMPackages(gitOpOutput, done) {
   if (argv.v) {
     utils.log.info(gitOpOutput);
   }
-
-  utils.log.info('Looking for package.json file in current directory');
 
   if (cmd === 'clone') {
     var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
@@ -143,6 +162,11 @@ async.waterfall([
 
   if (err) {
     return utils.log.error(cmdOutput);
+  }
+
+  if (err === HAS_ERROR) {
+    utils.log.info('npm modules installation has finished with error(s)');
+    return utils.log.error(JSON.stringify({files: errorLog}));
   }
 
   return utils.log.success('npm modules installed successfully!!!');
