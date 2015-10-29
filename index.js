@@ -100,7 +100,7 @@ function executeNPMInstall(done) {
       shell.cd(path);
       return npmops.install(function (exitCode, output) {
         if (exitCode) {
-          errorLog.push({file: path + '/package.json', details: output});
+          errorLog.push(path + '/package.json');
         }
         return cb(false);
       });
