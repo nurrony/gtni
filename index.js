@@ -67,8 +67,9 @@ var argv = require('yargs')
 shell.config = shellConfig;
 
 var errorLog = [];
-var NO_ERROR = 0;
-var HAS_ERROR = 1;
+var NO_ERROR = 200;
+var HAS_ERROR = 400;
+var NO_PACKAGE_FOUND = 404;
 
 function executeGitOperation(done) {
   var command = argv._[0];
@@ -123,7 +124,7 @@ function installNPMPackages(gitOpOutput, done) {
       }
       //is there any package.json?
       if (!packagePaths.length) {
-        return done(3, 'No package.json not found in your project. Skipping dependency installation.');
+        return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. Skipping dependency installation.');
       }
       async.each(packagePaths, function (path, cb) {
         shell.cd(path);
