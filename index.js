@@ -85,6 +85,35 @@ function executeGitOperation(done) {
   }
 }
 
+function executeNPMInstall(done) {
+  utils.packagePaths(function (error, packagePaths) {
+
+    if (error) {
+      return done(error);
+    }
+    //is there any package.json?
+    if (!packagePaths.length) {
+      return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. Skipping dependency installation.');
+    }
+
+    async.each(packagePaths, function (path, cb) {
+      shell.cd(path);
+      return npmops.install(function (exitCode, output) {
+        if (exitCode) {
+          errorLog.push({file: path + '/package.json', details: output});
+        }
+        return cb(false);
+      });
+    }, function (err) {
+      if (errorLog.length) {
+        return done(null, HAS_ERROR);
+      }
+      return done(null, NO_ERROR);
+
+    });
+  });
+}
+
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
   utils.log.success('git ' + cmd + ' ends successfully!!');
@@ -97,51 +126,9 @@ function installNPMPackages(gitOpOutput, done) {
   if (cmd === 'clone') {
     var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
     shell.cd(cloneDir + '/');
-
-    utils.packagePaths(function (error, packagePaths) {
-      if (error) {
-        return done(error);
-      }
-      if (!packagePaths.length) {
-        return done(3, 'No package.json not found in your project. Skipping dependency installation.');
-      }
-      async.each(packagePaths, function (path, cb) {
-        shell.cd(path);
-        return npmops.install(cb);
-      }, function (err) {
-        if (err) {
-          return done(err);
-        }
-        return done(null, 'done');
-
-      });
-    });
+    return executeNPMInstall(done)
   } else {
-
-    utils.packagePaths(function (error, packagePaths) {
-      if (error) {
-        return done(error);
-      }
-      //is there any package.json?
-      if (!packagePaths.length) {
-        return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. Skipping dependency installation.');
-      }
-      async.each(packagePaths, function (path, cb) {
-        shell.cd(path);
-        return npmops.install(function (exitCode, output) {
-          if (exitCode) {
-            errorLog.push({file: path + '/package.json', details: output});
-          }
-          return cb(false);
-        });
-      }, function (err) {
-        if (errorLog.length) {
-          return done(null, HAS_ERROR);
-        }
-        return done(null, NO_ERROR);
-
-      });
-    });
+    return executeNPMInstall(done);
   }
 }
 
@@ -149,10 +136,11 @@ async.waterfall([
   executeGitOperation,
   installNPMPackages
 ], function (err, cmdOutput) {
-  console.log(cmdOutput);
-  if (err === 3) {
-    return utils.log.info(cmdOutput)
+
+  if (err === NO_PACKAGE_FOUND) {
+    return utils.log.info(cmdOutput);
   }
+
   if (err) {
     return utils.log.error(cmdOutput);
   }
