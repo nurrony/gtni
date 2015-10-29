@@ -2,8 +2,10 @@
 var shell = require('shelljs');
 var chalk = require('chalk');
 var lodash = require('lodash');
-var urlParser = require('git-url-parse');
+var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
+var async = require('async');
+var globule = require('globule');
 
 var Utils = (function () {
 
@@ -23,8 +25,30 @@ var Utils = (function () {
     return shell.which('git');
   }
 
+  function gotoRootDirectory(done) {
+    shell.exec('git rev-parse --show-toplevel', {silent: true, async: true}, function(exitCode, output) {
+      if(exitCode){
+        return done(output);
+      }
+      output = output.trim();
+      shell.cd(output, {silent:true});
+      return done(null, output);
+    });
+  }
+
+  function directoryWithPackageJSON(output, done) {
+    var files = globule.find({
+      src: ['**/package.json', '!**/node_modules/**/package.json'],
+      prefixBase: true,
+      srcBase: output
+    }).map(function (file) {
+      return file.replace('package.json', ' ').trim();
+    });
+    return done(null, files);
+  }
+
   function getRepoName(repoUrl) {
-    return urlParser(repoUrl).name;
+    return gitUrlParser(repoUrl).name;
   }
 
   function isUnderGitRepo() {
@@ -57,13 +81,26 @@ var Utils = (function () {
     }).join(' ');
   }
 
+  function getPackageJSONPath(cb) {
+    async.waterfall([
+      gotoRootDirectory,
+      directoryWithPackageJSON
+    ], function (err, paths) {
+      if (err) {
+        return cb(err);
+      }
+      return cb(null, paths);
+    })
+  }
+
   return {
     isGitInstalled: checkForGit,
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
     getRepoName: getRepoName,
     isFileExists: isFileExists,
-    log: logger
+    log: logger,
+    packagePaths: getPackageJSONPath
   };
 
 })();

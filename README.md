@@ -1,8 +1,10 @@
 gtni
 ====
-Install your npm dependencies with `gtni` as soon you `pull`, `fetch` or `clone` a git repo.
+Install your npm dependencies recursively with `gtni` as soon you `pull`, `fetch` or `clone` a git repo.
 
 [![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
+
+>For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
 Installation
 -------------
@@ -37,6 +39,7 @@ Todo List
 - [x] Fetch support for most used `git fetch` options
 - [x] Support for `git clone`
 - [x] **NODE_ENV** support for `npm install`
+- [x] Support for read and install dependencies when project has multiple `package.json` files
 - [ ] Support for merge options in `git pull`
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
