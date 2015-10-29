@@ -99,24 +99,41 @@ function installNPMPackages(gitOpOutput, done) {
         return done(error);
       }
       if (!packagePaths.length) {
-       return done(true, 'package.json not found. Please run gtni from your root ' +
-          'directory where package.json resides.');
-      }
-      async.each(packagePaths, function(path, callback) {
-        //todo: iterate each path and run npm
-      }, function(err) {
-
-      });
-      return npmops.install(done);
-    });
-  } else {
-    utils.isFileExists('./package.json', function (exists) {
-      if (!exists) {
         return done(true, 'package.json not found. Please run gtni from your root ' +
           'directory where package.json resides.');
       }
-      utils.log.info('package.json found in the directory');
-      return npmops.install(done);
+      async.each(packagePaths, function (path, cb) {
+        console.log(path);
+        return cb(false);
+      }, function (err) {
+        if (err) {
+          return done(err);
+        }
+        return done(null, 'done');
+
+      });
+      //return npmops.install(done);
+    });
+  } else {
+
+    utils.packagePaths(function (error, packagePaths) {
+      if (error) {
+        return done(error);
+      }
+      if (!packagePaths.length) {
+        return done(true, 'package.json not found. Please run gtni from your root ' +
+          'directory where package.json resides.');
+      }
+      async.each(packagePaths, function (path, cb) {
+        console.log(path);
+        return cb(false);
+      }, function (err) {
+        if (err) {
+          return done(err);
+        }
+        return done(null, 'done');
+
+      });
     });
   }
 }
