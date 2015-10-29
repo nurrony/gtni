@@ -15,9 +15,6 @@ var NPMOps = (function () {
       silent: true,
       async: true
     }, function (exitCode, npmOutput) {
-      if (!exitCode) {
-        return done(null, npmOutput);
-      }
       return done(exitCode, npmOutput);
     });
   }

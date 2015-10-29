@@ -99,12 +99,11 @@ function installNPMPackages(gitOpOutput, done) {
         return done(error);
       }
       if (!packagePaths.length) {
-        return done(true, 'package.json not found. Please run gtni from your root ' +
-          'directory where package.json resides.');
+        return done(3, 'No package.json not found in your project. Skipping dependency installation.');
       }
       async.each(packagePaths, function (path, cb) {
-        console.log(path);
-        return cb(false);
+        shell.cd(path);
+        return npmops.install(cb);
       }, function (err) {
         if (err) {
           return done(err);
@@ -112,7 +111,6 @@ function installNPMPackages(gitOpOutput, done) {
         return done(null, 'done');
 
       });
-      //return npmops.install(done);
     });
   } else {
 
@@ -121,12 +119,17 @@ function installNPMPackages(gitOpOutput, done) {
         return done(error);
       }
       if (!packagePaths.length) {
-        return done(true, 'package.json not found. Please run gtni from your root ' +
-          'directory where package.json resides.');
+        return done(3, 'No package.json not found in your project. Skipping dependency installation.');
       }
       async.each(packagePaths, function (path, cb) {
-        console.log(path);
-        return cb(false);
+        shell.cd(path);
+        return npmops.install(function (exitCode, output) {
+          
+          if (exitCode) {
+            return cb(output);
+          }
+          return cb(false);
+        });
       }, function (err) {
         if (err) {
           return done(err);
@@ -142,6 +145,10 @@ async.waterfall([
   executeGitOperation,
   installNPMPackages
 ], function (err, cmdOutput) {
+  console.log(cmdOutput);
+  if (err === 3) {
+    return utils.log.info(cmdOutput)
+  }
   if (err) {
     return utils.log.error(cmdOutput);
   }
