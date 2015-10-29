@@ -165,7 +165,8 @@ async.waterfall([
   }
 
   if (cmdOutput === HAS_ERROR) {
-    utils.log.info('npm modules installation has finished with error(s)');
+    utils.log.info('npm modules installation has finished with error(s). Please check ' +
+      'npm-debug.log file in reported package.json directory');
     return utils.log.error(JSON.stringify({files: errorLog}));
   }
 
