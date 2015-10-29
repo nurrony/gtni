@@ -13,9 +13,10 @@
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^1.4.2",
+    "async": "^1.5.0",
     "chalk": "^1.1.1",
     "git-url-parse": "^4.0.0",
+    "globule": "^0.2.0",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3",
     "yargs": "^3.27.0"
