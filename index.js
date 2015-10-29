@@ -66,6 +66,9 @@ var argv = require('yargs')
 
 shell.config = shellConfig;
 
+var errorLog = [];
+var NO_ERROR = 0;
+var HAS_ERROR = 1;
 
 function executeGitOperation(done) {
   var command = argv._[0];
@@ -118,23 +121,23 @@ function installNPMPackages(gitOpOutput, done) {
       if (error) {
         return done(error);
       }
+      //is there any package.json?
       if (!packagePaths.length) {
         return done(3, 'No package.json not found in your project. Skipping dependency installation.');
       }
       async.each(packagePaths, function (path, cb) {
         shell.cd(path);
         return npmops.install(function (exitCode, output) {
-          //handle pacakge.json file error
           if (exitCode) {
-            return cb(output);
+            errorLog.push({file: path + '/package.json', details: output});
           }
           return cb(false);
         });
       }, function (err) {
-        if (err) {
-          return done(err);
+        if (errorLog.length) {
+          return done(null, HAS_ERROR);
         }
-        return done(null, 'done');
+        return done(null, NO_ERROR);
 
       });
     });
