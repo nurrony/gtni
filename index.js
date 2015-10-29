@@ -105,9 +105,9 @@ function executeNPMInstall(done) {
       shell.cd(path);
       return npmops.install(function (exitCode, output) {
         if (exitCode) {
-          errorLog.push(path + '/package.json');
+          errorLog.push(path + 'package.json');
           if (argv.v) {
-            utils.log.info('Log for ' + path + '/package.json');
+            utils.log.info('Log for ' + path + 'package.json');
             utils.log.error(output);
           }
         }
@@ -164,7 +164,7 @@ async.waterfall([
     return utils.log.error(cmdOutput);
   }
 
-  if (err === HAS_ERROR) {
+  if (cmdOutput === HAS_ERROR) {
     utils.log.info('npm modules installation has finished with error(s)');
     return utils.log.error(JSON.stringify({files: errorLog}));
   }
