@@ -124,7 +124,7 @@ function installNPMPackages(gitOpOutput, done) {
       async.each(packagePaths, function (path, cb) {
         shell.cd(path);
         return npmops.install(function (exitCode, output) {
-          
+          //handle pacakge.json file error
           if (exitCode) {
             return cb(output);
           }
