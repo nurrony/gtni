@@ -4,7 +4,7 @@ Install your npm dependencies recursively with `gtni` as soon you `pull`, `fetch
 
 [![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
 
-**For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list**
+>For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list**
 
 Installation
 -------------
