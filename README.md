@@ -1,6 +1,6 @@
 gtni
 ====
-Install your all npm dependencies recursively with **_gtni_** when you need to clone, fetch or pull git repositories.
+Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
 [![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
 
