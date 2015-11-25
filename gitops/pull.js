@@ -18,6 +18,8 @@ var GitPull = (function () {
         args = utils.prepareArguments(argv);
       }
 
+      return done(null, "hello world");
+
       shell.exec('git pull ' + args, {
         silent: true,
         async: true

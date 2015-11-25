@@ -85,11 +85,11 @@ function executeGitOperation(done) {
   }
 }
 
-function executeNPMInstall(done) {
+function executeNPMInstall(branchName, done) {
 
   utils.log.info('listing all package.json files in this project...');
 
-  utils.packagePaths(function (error, packagePaths) {
+  utils.packagePaths(branchName, function (error, packagePaths) {
 
     if (error) {
       return done(error);
@@ -137,6 +137,8 @@ function executeNPMInstall(done) {
 
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
+  var branchName = typeof argv.b === 'string' ? argv.b : false;
+
   utils.log.success('git ' + cmd + ' ends successfully!!');
   if (argv.v) {
     utils.log.info(gitOpOutput);
@@ -145,9 +147,9 @@ function installNPMPackages(gitOpOutput, done) {
   if (cmd === 'clone') {
     var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
     shell.cd(cloneDir + '/');
-    return executeNPMInstall(done)
+    return executeNPMInstall(false, done)
   } else {
-    return executeNPMInstall(done);
+    return executeNPMInstall(branchName, done);
   }
 }
 

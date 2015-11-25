@@ -36,6 +36,15 @@ var Utils = (function () {
     });
   }
 
+  function listPackageJsonFiles(branch, base, done) {
+    var listString;
+    listString = shell.exec('git ls-tree -r --name-only ' + branch +
+      '  | grep \'package.json\'', {
+      silent: true
+    }).output.trim();
+
+    return done(null, listString);
+  }
   function directoryWithPackageJSON(output, done) {
     var files = globule.find({
       src: ['**/package.json', '!**/node_modules/**/package.json'],
@@ -55,8 +64,12 @@ var Utils = (function () {
     return shell.exec('git rev-parse --is-inside-work-tree', {silent: true}).output;
   }
 
-  function isFileExists(filewithPath, done) {
-    return fs.exists(filewithPath, done);
+  function getCurrentBranchName() {
+    return shell.exec('git rev-parse --abbrev-ref HEAD', {silent: true}).output.trim();
+  }
+
+  function isFileExists(fileWithPath, done) {
+    return fs.exists(fileWithPath, done);
   }
 
   function prepareArguments(args) {
@@ -81,15 +94,21 @@ var Utils = (function () {
     }).join(' ');
   }
 
-  function getPackageJSONPath(cb) {
+  function getPackageJSONPath(branchName, cb) {
     async.waterfall([
       gotoRootDirectory,
-      directoryWithPackageJSON
+      function listingJSONFiles(basePath, cb) {
+        var branch = branchName ? branchName : getCurrentBranchName();
+
+        return listPackageJsonFiles(branch, basePath, cb);
+      }
+      //directoryWithPackageJSON
     ], function (err, paths) {
       if (err) {
         return cb(err);
       }
-      return cb(null, paths);
+      console.log('in utils', paths);
+      //return cb(null, paths);
     })
   }
 
