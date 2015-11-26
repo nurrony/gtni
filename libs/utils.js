@@ -42,11 +42,15 @@ var Utils = (function () {
       '--name-only ' + branch +
       '  | grep \'package.json\'', {
       silent: true
-    }).output.trim().replace(/(\r\n|\n|\r)/gm, ',').split(',');
-
-    listArray = listArray.map(function addBasePath(path) {
+    })
+      .output
+      .trim()
+      .replace(/(\r\n|\n|\r)/gm, ',')
+      .split(',')
+      .map(function addBasePath(path) {
         return base + '/' + path.replace('package.json', ' ').trim();
       });
+    
     return done(null, listArray);
   }
 
