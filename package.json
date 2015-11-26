@@ -13,17 +13,18 @@
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async": "^1.5.0",
+    "async-waterfall": "^0.1.5",
+    "async-each": "^1.0.0",
     "chalk": "^1.1.1",
-    "git-url-parse": "^4.0.0",
+    "git-url-parse": "^4.1.0",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3",
-    "yargs": "^3.27.0"
+    "yargs": "^3.30.0"
   },
   "devDependencies": {
-    "babel-eslint": "^4.1.3",
-    "eslint": "^1.6.0",
-    "eslint-config-airbnb": "^0.1.1",
+    "babel-eslint": "^4.1.6",
+    "eslint": "^1.10.0",
+    "eslint-config-airbnb": "^1.0.0",
     "eslint-plugin-react": "^3.5.1"
   },
   "repository": {

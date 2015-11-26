@@ -4,7 +4,8 @@
 
 var shellConfig = require('./shellconfig');
 var shell = require('shelljs');
-var async = require('async');
+var waterfall = require('async-waterfall');
+var each = require('async-each');
 var utils = require('./libs/utils');
 var gitops = require('./gitops');
 var npmops = require('./npm');
@@ -107,7 +108,7 @@ function executeNPMInstall(done) {
 
     utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
 
-    async.each(packagePaths, function (path, cb) {
+    each(packagePaths, function (path, cb) {
       shell.cd(path);
       return npmops.install(function (exitCode, output) {
         if (exitCode) {
@@ -162,7 +163,7 @@ function installNPMPackages(gitOpOutput, done) {
 
 }
 
-async.waterfall([
+waterfall([
   executeGitOperation,
   installNPMPackages
 ], function (err, cmdOutput) {

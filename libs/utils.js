@@ -4,7 +4,7 @@ var chalk = require('chalk');
 var lodash = require('lodash');
 var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
-var async = require('async');
+var waterfall = require('async-waterfall');
 //var globule = require('globule');
 
 var Utils = (function () {
@@ -109,7 +109,7 @@ var Utils = (function () {
   }
 
   function getPackageJSONPath(branchName, cb) {
-    async.waterfall([
+    waterfall([
       gotoRootDirectory,
       function listingJSONFiles(basePath, cb) {
         return listPackageJsonFiles(branchName, basePath, cb);
