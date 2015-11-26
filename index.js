@@ -94,9 +94,9 @@ function executeNPMInstall(done) {
                            currentBranchName !== checkoutBranchName ? argv.b: false;
 
   var branchName = checkoutBranchName ? utils.checkOutBranch(checkoutBranchName) : currentBranchName;
-  console.log('currentBranchName', utils.currentBranchName());
+
   utils.packagePaths(branchName, function (error, packagePaths) {
-    console.log(packagePaths);
+
     if (error) {
       return done(error);
     }
