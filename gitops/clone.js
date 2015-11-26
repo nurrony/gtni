@@ -1,12 +1,8 @@
 var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
-var GitClone = (function () {
-
-  'use strict';
-
+var GitClone = (function GitCloneWrapper() {
   function executeClone(argv, done) {
-
     var args = '';
     var repoNPath = argv._[1] + ' ' + (typeof argv._[2] === 'undefined' ? '' : argv._[2]);
 
@@ -18,20 +14,19 @@ var GitClone = (function () {
       args = utils.prepareArguments(argv);
     }
 
-    shell.exec('git clone ' + args + ' ' + repoNPath, {
-      silent: true,
-      async: true
-    }, function (exitCode, output) {
-      if (!exitCode) {
-        return done(null, output);
-      }
-      return done(exitCode, output);
-    });
+    shell.exec('git clone ' + args + ' ' + repoNPath, {silent: true, async: true},
+      function cloneFinished(exitCode, output) {
+        if (!exitCode) {
+          return done(null, output);
+        }
+
+        return done(exitCode, output);
+      });
   }
 
   return {
     clone: executeClone
-  }
+  };
 })();
 
 module.exports = GitClone;
