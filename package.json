@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
     "preinstall": "echo \"This package depends on git. Please install it if you do not have it yet\""
   },
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",

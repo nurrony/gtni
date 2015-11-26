@@ -5,18 +5,16 @@ var lodash = require('lodash');
 var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
 var waterfall = require('async-waterfall');
-//var globule = require('globule');
 
-var Utils = (function () {
-
+var Utils = (function UtilsWrapper() {
   var logger = {
-    info: function (msg) {
+    info: function info(msg) {
       console.log(chalk.cyan(msg));
     },
-    error: function (msg) {
+    error: function error(msg) {
       console.log(chalk.bold.underline.red('Error'), '\n', chalk.red(msg));
     },
-    success: function (msg) {
+    success: function success(msg) {
       console.log(chalk.green(msg));
     }
   };
@@ -54,16 +52,16 @@ var Utils = (function () {
     return done(null, listArray);
   }
 
-  function directoryWithPackageJSON(output, done) {
+/*  function directoryWithPackageJSON(output, done) {
     var files = globule.find({
-      src: ['**/package.json', '!**/node_modules/**/package.json'],
+      src: ['**!/package.json', '!**!/node_modules/!**!/package.json'],
       prefixBase: true,
       srcBase: output
     }).map(function (file) {
       return file.replace('package.json', ' ').trim();
     });
     return done(null, files);
-  }
+  }*/
 
   function getRepoName(repoUrl) {
     return gitUrlParser(repoUrl).name;
@@ -87,7 +85,6 @@ var Utils = (function () {
   }
 
   function prepareArguments(args) {
-
     var gitOptions = lodash.omit(args, [
       '$0',
       'h',
@@ -99,7 +96,7 @@ var Utils = (function () {
       'repository'
     ]);
 
-    return lodash.map(gitOptions, function (value, key) {
+    return lodash.map(gitOptions, function appendBasePath(value, key) {
       if (typeof value === 'boolean') {
         return key.length > 1 ? '--' + key : '-' + key;
       } else {
@@ -114,13 +111,12 @@ var Utils = (function () {
       function listingJSONFiles(basePath, cb) {
         return listPackageJsonFiles(branchName, basePath, cb);
       }
-      //directoryWithPackageJSON
-    ], function (err, paths) {
+    ], function listCompleted(err, paths) {
       if (err) {
         return cb(err);
       }
       return cb(null, paths);
-    })
+    });
   }
 
   return {
