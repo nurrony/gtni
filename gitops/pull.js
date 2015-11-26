@@ -2,18 +2,19 @@
 var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
-var GitPull = (function () {
-
-  'use strict';
-
+var GitPull = (function GitPullWrapper() {
   function executePull(argv, done) {
+    var args = '';
+    var branchToPull = argv.b || false;
+    var repoToPull = argv.repo || false;
+
     if (utils.isGitRepo()) {
       utils.log.info('Pulling Git Repository...');
-      var args = '';
-      if (argv.b){
-        args = 'origin ' + argv.b;
-      } else if (argv.repo) {
-        args = argv.repo;
+
+      if (branchToPull) {
+        args = 'origin ' + branchToPull;
+      } else if (repoToPull) {
+        args = repoToPull;
       } else {
         args = utils.prepareArguments(argv);
       }
@@ -21,10 +22,11 @@ var GitPull = (function () {
       shell.exec('git pull ' + args, {
         silent: true,
         async: true
-      }, function (exitCode, output) {
-        if(!exitCode){
+      }, function pullCompleted(exitCode, output) {
+        if (!exitCode) {
           return done(null, output);
         }
+
         return done(exitCode, output);
       });
     }
@@ -32,7 +34,7 @@ var GitPull = (function () {
 
   return {
     pull: executePull
-  }
+  };
 })();
 
 module.exports = GitPull;
