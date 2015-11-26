@@ -2,18 +2,19 @@
 var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
-var GitFetch = (function () {
-
-  'use strict';
-
+var GitFetch = (function GitFetchWrapper() {
   function executeFetch(argv, done) {
+    var args = '';
+    var branchToFetch = argv.b || false;
+    var repoToFetch = argv.repo || false;
+
     if (utils.isGitRepo()) {
       utils.log.info('Fetching Git Repository...');
-      var args = '';
-      if (argv.b){
-        args = 'origin ' + argv.b;
-      } else if (argv.repo) {
-        args = argv.repo;
+
+      if (branchToFetch) {
+        args = 'origin ' + branchToFetch;
+      } else if (repoToFetch) {
+        args = repoToFetch;
       } else {
         args = utils.prepareArguments(argv);
       }
@@ -21,10 +22,11 @@ var GitFetch = (function () {
       shell.exec('git fetch ' + args, {
         silent: true,
         async: true
-      }, function (exitCode, output) {
-        if(!exitCode){
+      }, function fetchCompleted(exitCode, output) {
+        if (!exitCode) {
           return done(null, output);
         }
+
         return done(exitCode, output);
       });
     }
@@ -32,7 +34,7 @@ var GitFetch = (function () {
 
   return {
     fetch: executeFetch
-  }
+  };
 })();
 
 module.exports = GitFetch;
