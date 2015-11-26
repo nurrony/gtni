@@ -5,7 +5,7 @@ var lodash = require('lodash');
 var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
 var async = require('async');
-var globule = require('globule');
+//var globule = require('globule');
 
 var Utils = (function () {
 
