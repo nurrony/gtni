@@ -24,8 +24,7 @@
   "devDependencies": {
     "babel-eslint": "^4.1.6",
     "eslint": "^1.10.0",
-    "eslint-config-airbnb": "^1.0.0",
-    "eslint-plugin-react": "^3.5.1"
+    "eslint-config-airbnb": "^1.0.0"
   },
   "repository": {
     "type": "git",
