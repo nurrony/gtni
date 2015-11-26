@@ -85,12 +85,18 @@ function executeGitOperation(done) {
   }
 }
 
-function executeNPMInstall(branchName, done) {
+function executeNPMInstall(done) {
 
   utils.log.info('listing all package.json files in this project...');
+  var currentBranchName = utils.currentBranchName();
+  var checkoutBranchName = argv.b &&
+                           typeof argv.b === 'string' &&
+                           currentBranchName !== checkoutBranchName ? argv.b: false;
 
+  var branchName = checkoutBranchName ? utils.checkOutBranch(checkoutBranchName) : currentBranchName;
+  console.log('currentBranchName', utils.currentBranchName());
   utils.packagePaths(branchName, function (error, packagePaths) {
-
+    console.log(packagePaths);
     if (error) {
       return done(error);
     }
@@ -99,7 +105,7 @@ function executeNPMInstall(branchName, done) {
       return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. Skipping dependency installation.');
     }
 
-    utils.log.info('Installing npm modules. It may take some time...');
+    utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
 
     async.each(packagePaths, function (path, cb) {
       shell.cd(path);
@@ -121,6 +127,10 @@ function executeNPMInstall(branchName, done) {
       });
     }, function (err) {
 
+      if (checkoutBranchName) {
+        utils.checkOutBranch(currentBranchName);
+      }
+
       if(err) {
         return done(err);
       }
@@ -137,7 +147,6 @@ function executeNPMInstall(branchName, done) {
 
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
-  var branchName = typeof argv.b === 'string' ? argv.b : false;
 
   utils.log.success('git ' + cmd + ' ends successfully!!');
   if (argv.v) {
@@ -147,10 +156,10 @@ function installNPMPackages(gitOpOutput, done) {
   if (cmd === 'clone') {
     var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
     shell.cd(cloneDir + '/');
-    return executeNPMInstall(false, done)
-  } else {
-    return executeNPMInstall(branchName, done);
   }
+
+  return executeNPMInstall(done);
+
 }
 
 async.waterfall([

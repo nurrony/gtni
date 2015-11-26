@@ -37,14 +37,19 @@ var Utils = (function () {
   }
 
   function listPackageJsonFiles(branch, base, done) {
-    var listString;
-    listString = shell.exec('git ls-tree -r --name-only ' + branch +
+    var listArray;
+    listArray = shell.exec('git ls-tree -r --name-only ' + branch +
       '  | grep \'package.json\'', {
       silent: true
-    }).output.trim();
+    }).output.trim().replace(/(\r\n|\n|\r)/gm, ',').split(',');
 
-    return done(null, listString);
+    console.log('before map', listArray);
+    listArray = listArray.map(function addBasePath(path) {
+        return base + '/' + path.replace('package.json', ' ').trim();
+      });
+    return done(null, listArray);
   }
+
   function directoryWithPackageJSON(output, done) {
     var files = globule.find({
       src: ['**/package.json', '!**/node_modules/**/package.json'],
@@ -66,6 +71,12 @@ var Utils = (function () {
 
   function getCurrentBranchName() {
     return shell.exec('git rev-parse --abbrev-ref HEAD', {silent: true}).output.trim();
+  }
+
+  function checkOutToBranch(branch) {
+    console.log('checking out');
+    shell.exec('git checkout ' + branch, {silent: true}).output.trim();
+    return branch;
   }
 
   function isFileExists(fileWithPath, done) {
@@ -98,17 +109,14 @@ var Utils = (function () {
     async.waterfall([
       gotoRootDirectory,
       function listingJSONFiles(basePath, cb) {
-        var branch = branchName ? branchName : getCurrentBranchName();
-
-        return listPackageJsonFiles(branch, basePath, cb);
+        return listPackageJsonFiles(branchName, basePath, cb);
       }
       //directoryWithPackageJSON
     ], function (err, paths) {
       if (err) {
         return cb(err);
       }
-      console.log('in utils', paths);
-      //return cb(null, paths);
+      return cb(null, paths);
     })
   }
 
@@ -119,7 +127,9 @@ var Utils = (function () {
     getRepoName: getRepoName,
     isFileExists: isFileExists,
     log: logger,
-    packagePaths: getPackageJSONPath
+    packagePaths: getPackageJSONPath,
+    checkOutBranch: checkOutToBranch,
+    currentBranchName: getCurrentBranchName
   };
 
 })();
