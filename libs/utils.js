@@ -38,7 +38,8 @@ var Utils = (function () {
 
   function listPackageJsonFiles(branch, base, done) {
     var listArray;
-    listArray = shell.exec('git ls-tree -r --name-only ' + branch +
+    listArray = shell.exec('git ls-tree -r ' +
+      '--name-only ' + branch +
       '  | grep \'package.json\'', {
       silent: true
     }).output.trim().replace(/(\r\n|\n|\r)/gm, ',').split(',');
