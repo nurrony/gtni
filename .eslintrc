@@ -3,6 +3,7 @@
 {
   "extends": "airbnb/legacy",
   "rules": {
-    "comma-dangle": [2, "never"]
+    "comma-dangle": [2, "never"],
+    "no-console": 0
   }
 }
