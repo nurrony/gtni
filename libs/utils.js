@@ -50,7 +50,7 @@ var Utils = (function () {
       .map(function addBasePath(path) {
         return base + '/' + path.replace('package.json', ' ').trim();
       });
-    
+
     return done(null, listArray);
   }
 
@@ -78,7 +78,6 @@ var Utils = (function () {
   }
 
   function checkOutToBranch(branch) {
-    console.log('checking out');
     shell.exec('git checkout ' + branch, {silent: true}).output.trim();
     return branch;
   }
