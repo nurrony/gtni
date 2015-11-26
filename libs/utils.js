@@ -44,7 +44,6 @@ var Utils = (function () {
       silent: true
     }).output.trim().replace(/(\r\n|\n|\r)/gm, ',').split(',');
 
-    console.log('before map', listArray);
     listArray = listArray.map(function addBasePath(path) {
         return base + '/' + path.replace('package.json', ' ').trim();
       });
