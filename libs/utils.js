@@ -1,4 +1,3 @@
-
 var shell = require('shelljs');
 var chalk = require('chalk');
 var lodash = require('lodash');
@@ -24,13 +23,19 @@ var Utils = (function UtilsWrapper() {
   }
 
   function gotoRootDirectory(done) {
-    shell.exec('git rev-parse --show-toplevel', {silent: true, async: true}, function(exitCode, output) {
-      if(exitCode){
+    shell.exec('git rev-parse --show-toplevel', {
+      silent: true,
+      async: true
+    }, function cwdToRootCompleted(exitCode, output) {
+      var trimmedOutput = output.trim();
+
+      if (exitCode) {
         return done(output);
       }
-      output = output.trim();
-      shell.cd(output, {silent:true});
-      return done(null, output);
+
+      shell.cd(trimmedOutput, {silent: true});
+
+      return done(null, trimmedOutput);
     });
   }
 
@@ -38,9 +43,7 @@ var Utils = (function UtilsWrapper() {
     var listArray;
     listArray = shell.exec('git ls-tree -r ' +
       '--name-only ' + branch +
-      '  | grep \'package.json\'', {
-      silent: true
-    })
+      '  | grep \'package.json\'', {silent: true})
       .output
       .trim()
       .replace(/(\r\n|\n|\r)/gm, ',')
@@ -52,16 +55,16 @@ var Utils = (function UtilsWrapper() {
     return done(null, listArray);
   }
 
-/*  function directoryWithPackageJSON(output, done) {
-    var files = globule.find({
-      src: ['**!/package.json', '!**!/node_modules/!**!/package.json'],
-      prefixBase: true,
-      srcBase: output
-    }).map(function (file) {
-      return file.replace('package.json', ' ').trim();
-    });
-    return done(null, files);
-  }*/
+  /*  function directoryWithPackageJSON(output, done) {
+   var files = globule.find({
+   src: ['**!/package.json', '!**!/node_modules/!**!/package.json'],
+   prefixBase: true,
+   srcBase: output
+   }).map(function (file) {
+   return file.replace('package.json', ' ').trim();
+   });
+   return done(null, files);
+   }*/
 
   function getRepoName(repoUrl) {
     return gitUrlParser(repoUrl).name;
@@ -99,17 +102,17 @@ var Utils = (function UtilsWrapper() {
     return lodash.map(gitOptions, function appendBasePath(value, key) {
       if (typeof value === 'boolean') {
         return key.length > 1 ? '--' + key : '-' + key;
-      } else {
-        return key.length > 1 ? '--' + key + ' ' + value : '-' + key + ' ' + value;
       }
+
+      return key.length > 1 ? '--' + key + ' ' + value : '-' + key + ' ' + value;
     }).join(' ');
   }
 
   function getPackageJSONPath(branchName, cb) {
     waterfall([
       gotoRootDirectory,
-      function listingJSONFiles(basePath, cb) {
-        return listPackageJsonFiles(branchName, basePath, cb);
+      function findNListJSON(basePath, callback) {
+        return listPackageJsonFiles(branchName, basePath, callback);
       }
     ], function listCompleted(err, paths) {
       if (err) {
@@ -130,7 +133,6 @@ var Utils = (function UtilsWrapper() {
     checkOutBranch: checkOutToBranch,
     currentBranchName: getCurrentBranchName
   };
-
 })();
 
 module.exports = Utils;
