@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
-
 var shellConfig = require('./shellconfig');
 var shell = require('shelljs');
 var waterfall = require('async-waterfall');
@@ -10,13 +8,21 @@ var utils = require('./libs/utils');
 var gitops = require('./gitops');
 var npmops = require('./npm');
 
+/**
+ * User defined variables
+ * */
+var errorLog = [];
+var NO_ERROR = 200;
+var HAS_ERROR = 400;
+var NO_PACKAGE_FOUND = 404;
+
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .version(function () {
+  .version(function printGtniVersion() {
     return 'gtni version ' + require('./package').version;
   })
   .alias('v', 'version')
-  .command('pull', 'git pull and install npm dependencies', function (yargs) {
+  .command('pull', 'git pull and install npm dependencies', function pullSubCommands(yargs) {
     argv = yargs.option({
       'branch': {
         alias: 'b',
@@ -32,7 +38,7 @@ var argv = require('yargs')
       }
     }).help('help').argv;
   })
-  .command('fetch', 'git fetch and install npm dependencies', function (yargs) {
+  .command('fetch', 'git fetch and install npm dependencies', function fetchSubCommands(yargs) {
     argv = yargs.option({
       'branch': {
         alias: 'b',
@@ -49,7 +55,7 @@ var argv = require('yargs')
     }).help('help').argv;
   })
   .command('clone', 'clone a git repository and install ' +
-  'npm dependencies', function (yargs) {
+  'npm dependencies', function cloneSubCommands(yargs) {
     argv = yargs.option({
       'branch': {
         alias: 'b',
@@ -67,50 +73,48 @@ var argv = require('yargs')
 
 shell.config = shellConfig;
 
-var errorLog = [];
-var NO_ERROR = 200;
-var HAS_ERROR = 400;
-var NO_PACKAGE_FOUND = 404;
-
 function executeGitOperation(done) {
   var command = argv._[0];
+
   switch (command) {
-    case 'pull':
-      return gitops.pull(argv, done);
-    case 'fetch':
-      return gitops.fetch(argv, done);
-    case 'clone':
-      return gitops.clone(argv, done);
-    default:
-      return require('yargs').showHelp();
+  case 'pull':
+    return gitops.pull(argv, done);
+  case 'fetch':
+    return gitops.fetch(argv, done);
+  case 'clone':
+    return gitops.clone(argv, done);
+  default:
+    return require('yargs').showHelp();
   }
 }
 
 function executeNPMInstall(done) {
-
-  utils.log.info('listing all package.json files in this project...');
   var currentBranchName = utils.currentBranchName();
-  var checkoutBranchName = argv.b &&
-                           typeof argv.b === 'string' &&
-                           currentBranchName !== checkoutBranchName ? argv.b: false;
+  var checkoutBranchName = (argv.b &&
+                            typeof argv.b === 'string' &&
+                            currentBranchName !== checkoutBranchName) ? argv.b : false;
 
   var branchName = checkoutBranchName ? utils.checkOutBranch(checkoutBranchName) : currentBranchName;
 
-  utils.packagePaths(branchName, function (error, packagePaths) {
+  utils.log.info('listing all package.json files in this project...');
 
+  utils.packagePaths(branchName, function packageListCompleted(error, packagePaths) {
     if (error) {
       return done(error);
     }
-    //is there any package.json?
+
+    // is there any package.json?
     if (!packagePaths.length) {
-      return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. Skipping dependency installation.');
+      return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. ' +
+        'Skipping dependency installation.');
     }
 
     utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
 
-    each(packagePaths, function (path, cb) {
+    each(packagePaths, function packageIterator(path, cb) {
       shell.cd(path);
-      return npmops.install(function (exitCode, output) {
+
+      return npmops.install(function installPackage(exitCode, output) {
         if (exitCode) {
           errorLog.push(path + 'package.json');
           if (argv.v) {
@@ -126,13 +130,12 @@ function executeNPMInstall(done) {
 
         return cb(false);
       });
-    }, function (err) {
-
+    }, function installCompleted(err) {
       if (checkoutBranchName) {
         utils.checkOutBranch(currentBranchName);
       }
 
-      if(err) {
+      if (err) {
         return done(err);
       }
 
@@ -141,13 +144,13 @@ function executeNPMInstall(done) {
       }
 
       return done(null, NO_ERROR);
-
     });
   });
 }
 
 function installNPMPackages(gitOpOutput, done) {
   var cmd = argv._[0];
+  var cloneDir = '';
 
   utils.log.success('git ' + cmd + ' ends successfully!!');
   if (argv.v) {
@@ -155,19 +158,17 @@ function installNPMPackages(gitOpOutput, done) {
   }
 
   if (cmd === 'clone') {
-    var cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
+    cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
     shell.cd(cloneDir + '/');
   }
 
   return executeNPMInstall(done);
-
 }
 
 waterfall([
   executeGitOperation,
   installNPMPackages
-], function (err, cmdOutput) {
-
+], function allDone(err, cmdOutput) {
   if (err === NO_PACKAGE_FOUND) {
     return utils.log.info(cmdOutput);
   }
