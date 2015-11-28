@@ -115,7 +115,7 @@ function executeNPMInstall(done) {
       shell.cd(path);
 
       return npmops.install(function installPackage(exitCode, output) {
-        if (exitCode) {
+        if (exitCode || output.toLowerCase().indexOf('failed') !== -1) {
           errorLog.push(path + 'package.json');
           if (argv.v) {
             utils.log.info('Log for ' + path + 'package.json');
