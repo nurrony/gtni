@@ -7,13 +7,13 @@ var waterfall = require('async-waterfall');
 
 var Utils = (function UtilsWrapper() {
   var logger = {
-    info: function info(msg) {
+    info: function infoFn(msg) {
       console.log(chalk.cyan(msg));
     },
-    error: function error(msg) {
+    error: function errorFn(msg) {
       console.log(chalk.bold.underline.red('Error'), '\n', chalk.red(msg));
     },
-    success: function success(msg) {
+    success: function successFn(msg) {
       console.log(chalk.green(msg));
     }
   };
