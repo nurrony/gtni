@@ -4,6 +4,11 @@
   "extends": "airbnb/legacy",
   "rules": {
     "comma-dangle": [2, "never"],
-    "no-console": 0
+    "no-console": 0,
+    "strict": [2, "function"],
+    "max-len": [2, 80, 4],
+    "no-plusplus": 0,
+    "camelcase": 2,
+    "quote-props": [2, "as-needed", { "keywords": true }]
   }
 }
