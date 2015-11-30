@@ -6,6 +6,8 @@ var fs = require('fs');
 var waterfall = require('async-waterfall');
 
 var Utils = (function UtilsWrapper() {
+  'use strict';
+
   var logger = {
     info: function infoFn(msg) {
       console.log(chalk.cyan(msg));
@@ -71,11 +73,15 @@ var Utils = (function UtilsWrapper() {
   }
 
   function isUnderGitRepo() {
-    return shell.exec('git rev-parse --is-inside-work-tree', {silent: true}).output;
+    return shell.exec('git rev-parse --is-inside-work-tree', {
+      silent: true
+    }).output;
   }
 
   function getCurrentBranchName() {
-    return shell.exec('git rev-parse --abbrev-ref HEAD', {silent: true}).output.trim();
+    return shell.exec('git rev-parse --abbrev-ref HEAD', {
+      silent: true
+    }).output.trim();
   }
 
   function checkOutToBranch(branch) {
@@ -104,7 +110,11 @@ var Utils = (function UtilsWrapper() {
         return key.length > 1 ? '--' + key : '-' + key;
       }
 
-      return key.length > 1 ? '--' + key + ' ' + value : '-' + key + ' ' + value;
+      if (key.length > 1) {
+        return '--' + key + ' ' + value;
+      }
+
+      return '-' + key + ' ' + value;
     }).join(' ');
   }
 
