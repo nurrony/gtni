@@ -19,54 +19,65 @@ var NO_PACKAGE_FOUND = 404;
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
   .version(function printGtniVersion() {
+    'use strict';
     return 'gtni version ' + require('./package').version;
   })
   .alias('v', 'version')
-  .command('pull', 'git pull and install npm dependencies', function pullSubCommands(yargs) {
+  .command('pull', 'git pull and install npm dependencies',
+  function pullSubCommands(yargs) {
+    'use strict';
+
     argv = yargs.option({
-      'branch': {
+      branch: {
         alias: 'b',
         type: 'string',
-        default: false,
+        'default': false,
         description: 'remote branch name to pull'
       },
-      'repository': {
+      repository: {
         alias: 'repo',
         type: 'string',
-        default: false,
+        'default': false,
         description: 'The "remote" repository that is the source'
       }
     }).help('help').argv;
   })
-  .command('fetch', 'git fetch and install npm dependencies', function fetchSubCommands(yargs) {
+  .command('fetch', 'git fetch and install npm dependencies',
+  function fetchSubCommands(yargs) {
+    'use strict';
+
     argv = yargs.option({
-      'branch': {
+      branch: {
         alias: 'b',
         type: 'string',
-        default: false,
+        'default': false,
         description: 'remote branch name to fetch'
       },
-      'repository': {
+      repository: {
         alias: 'repo',
         type: 'string',
-        default: false,
+        'default': false,
         description: 'The "remote" repository that is the source'
       }
     }).help('help').argv;
   })
   .command('clone', 'clone a git repository and install ' +
   'npm dependencies', function cloneSubCommands(yargs) {
+    'use strict';
+
     argv = yargs.option({
-      'branch': {
+      branch: {
         alias: 'b',
         type: 'string',
-        default: false,
+        'default': false,
         description: 'remote branch name to clone'
       }
     }).help('help').argv;
   })
   .demand(1, 'must provide a valid command')
-  .example('[NODE_ENV=<env>] $0 pull [git-options]', 'git pull and install npm packages')
+  .example(
+  '[NODE_ENV=<env>] $0 pull [git-options]',
+  'git pull and install npm packages')
   .help('h')
   .alias('h', 'help')
   .argv;
@@ -74,6 +85,8 @@ var argv = require('yargs')
 shell.config = shellConfig;
 
 function executeGitOperation(done) {
+  'use strict';
+
   var command = argv._[0];
 
   switch (command) {
@@ -89,27 +102,37 @@ function executeGitOperation(done) {
 }
 
 function executeNPMInstall(done) {
+  'use strict';
+
   var currentBranchName = utils.currentBranchName();
   var checkoutBranchName = (argv.b &&
-                            typeof argv.b === 'string' &&
-                            currentBranchName !== checkoutBranchName) ? argv.b : false;
+  typeof argv.b === 'string' &&
+  currentBranchName !== checkoutBranchName) ? argv.b : false;
 
-  var branchName = checkoutBranchName ? utils.checkOutBranch(checkoutBranchName) : currentBranchName;
+  var branchName = checkoutBranchName ?
+    utils.checkOutBranch(checkoutBranchName) : currentBranchName;
 
   utils.log.info('listing all package.json files in this project...');
 
-  utils.packagePaths(branchName, function packageListCompleted(error, packagePaths) {
+  utils.packagePaths(branchName, function packageListCompleted(
+    error,
+    packagePaths
+  ) {
     if (error) {
       return done(error);
     }
 
     // is there any package.json?
     if (!packagePaths.length) {
-      return done(NO_PACKAGE_FOUND, 'No package.json not found in your project. ' +
-        'Skipping dependency installation.');
+      return done(
+        NO_PACKAGE_FOUND,
+        'No package.json not found in your project. ' +
+        'Skipping dependency installation.'
+      );
     }
 
-    utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
+    utils.log.info('Installing npm modules for branch ' +
+      branchName + '. It may take some time...');
 
     each(packagePaths, function packageIterator(path, cb) {
       shell.cd(path);
@@ -149,6 +172,8 @@ function executeNPMInstall(done) {
 }
 
 function installNPMPackages(gitOpOutput, done) {
+  'use strict';
+
   var cmd = argv._[0];
   var cloneDir = '';
 
@@ -169,6 +194,8 @@ waterfall([
   executeGitOperation,
   installNPMPackages
 ], function allDone(err, cmdOutput) {
+  'use strict';
+
   if (err === NO_PACKAGE_FOUND) {
     return utils.log.info(cmdOutput);
   }
