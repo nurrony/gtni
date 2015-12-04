@@ -14,8 +14,8 @@
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "async-waterfall": "^0.1.5",
     "async-each": "^1.0.0",
+    "async-waterfall": "^0.1.5",
     "chalk": "^1.1.1",
     "git-url-parse": "^4.1.0",
     "lodash": "^3.10.1",
@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^4.1.6",
-    "eslint": "^1.10.1",
-    "eslint-config-airbnb": "^1.0.0"
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.0.0"
   },
   "repository": {
     "type": "git",
