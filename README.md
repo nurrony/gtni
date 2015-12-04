@@ -2,7 +2,7 @@ gtni
 ====
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
-[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][npm-url] [![devDependencies][npm-dev-dependencies]][npm-url] [![Downloads][npm-month-downloads]][npm-url]
+[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url]
 
 >For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
@@ -47,5 +47,7 @@ Todo List
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
 [npm-dependencies]: https://img.shields.io/david/nmrony/gtni.svg?style=flat-square
 [npm-dev-dependencies]: https://img.shields.io/david/dev/nmrony/gtni.svg?style=flat-square
-[npm-month-downloads]: https://img.shields.io/npm/dm/gtni.svg?style=flat-square
+[npm-total-downloads]: https://img.shields.io/npm/dt/gtni.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/gtni
+[dep-status]: https://david-dm.org/nmrony/gtni#info=dependencies&view=table
+[devdep-status]: https://david-dm.org/nmrony/gtni#info=devDependencies&view=table
