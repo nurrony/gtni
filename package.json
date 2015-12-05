@@ -20,7 +20,7 @@
     "git-url-parse": "^4.1.0",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3",
-    "yargs": "^3.30.0"
+    "yargs": "^3.31.0"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.6",
