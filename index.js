@@ -90,14 +90,14 @@ function executeGitOperation(done) {
   var command = argv._[0];
 
   switch (command) {
-  case 'pull':
-    return gitops.pull(argv, done);
-  case 'fetch':
-    return gitops.fetch(argv, done);
-  case 'clone':
-    return gitops.clone(argv, done);
-  default:
-    return require('yargs').showHelp();
+    case 'pull':
+      return gitops.pull(argv, done);
+    case 'fetch':
+      return gitops.fetch(argv, done);
+    case 'clone':
+      return gitops.clone(argv, done);
+    default:
+      return require('yargs').showHelp();
   }
 }
 
@@ -114,61 +114,59 @@ function executeNPMInstall(done) {
 
   utils.log.info('listing all package.json files in this project...');
 
-  utils.packagePaths(branchName, function packageListCompleted(
-    error,
-    packagePaths
-  ) {
-    if (error) {
-      return done(error);
-    }
+  utils.packagePaths(branchName,
+    function packageListCompleted(error, packagePaths) {
+      if (error) {
+        return done(error);
+      }
 
-    // is there any package.json?
-    if (!packagePaths.length) {
-      return done(
-        NO_PACKAGE_FOUND,
-        'No package.json not found in your project. ' +
-        'Skipping dependency installation.'
-      );
-    }
+      // is there any package.json?
+      if (!packagePaths.length) {
+        return done(
+          NO_PACKAGE_FOUND,
+          'No package.json not found in your project. ' +
+          'Skipping dependency installation.'
+        );
+      }
 
-    utils.log.info('Installing npm modules for branch ' +
-      branchName + '. It may take some time...');
+      utils.log.info('Installing npm modules for branch ' +
+        branchName + '. It may take some time...');
 
-    each(packagePaths, function packageIterator(path, cb) {
-      shell.cd(path);
+      each(packagePaths, function packageIterator(path, cb) {
+        shell.cd(path);
 
-      return npmops.install(function installPackage(exitCode, output) {
-        if (exitCode || output.toLowerCase().indexOf('failed') !== -1) {
-          errorLog.push(path + 'package.json');
+        return npmops.install(function installPackage(exitCode, output) {
+          if (exitCode || output.toLowerCase().indexOf('failed') !== -1) {
+            errorLog.push(path + 'package.json');
+            if (argv.v) {
+              utils.log.info('Log for ' + path + 'package.json');
+              utils.log.error(output);
+            }
+          }
+
           if (argv.v) {
             utils.log.info('Log for ' + path + 'package.json');
-            utils.log.error(output);
+            utils.log.info(output);
           }
+
+          return cb(false);
+        });
+      }, function installCompleted(err) {
+        if (checkoutBranchName) {
+          utils.checkOutBranch(currentBranchName);
         }
 
-        if (argv.v) {
-          utils.log.info('Log for ' + path + 'package.json');
-          utils.log.info(output);
+        if (err) {
+          return done(err);
         }
 
-        return cb(false);
+        if (errorLog.length) {
+          return done(null, HAS_ERROR);
+        }
+
+        return done(null, NO_ERROR);
       });
-    }, function installCompleted(err) {
-      if (checkoutBranchName) {
-        utils.checkOutBranch(currentBranchName);
-      }
-
-      if (err) {
-        return done(err);
-      }
-
-      if (errorLog.length) {
-        return done(null, HAS_ERROR);
-      }
-
-      return done(null, NO_ERROR);
     });
-  });
 }
 
 function installNPMPackages(gitOpOutput, done) {
@@ -214,4 +212,3 @@ waterfall([
 
   return utils.log.success('npm modules installed successfully!!!');
 });
-
