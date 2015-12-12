@@ -35,7 +35,7 @@ var Utils = (function UtilsWrapper() {
         return done(output);
       }
 
-      shell.cd(trimmedOutput, {silent: true});
+      shell.cd(trimmedOutput, { silent: true });
 
       return done(null, trimmedOutput);
     });
@@ -45,7 +45,7 @@ var Utils = (function UtilsWrapper() {
     var listArray;
     listArray = shell.exec('git ls-tree -r ' +
       '--name-only ' + branch +
-      '  | grep \'package.json\'', {silent: true})
+      '  | grep \'package.json\'', { silent: true })
       .output
       .trim()
       .replace(/(\r\n|\n|\r)/gm, ',')
@@ -85,7 +85,7 @@ var Utils = (function UtilsWrapper() {
   }
 
   function checkOutToBranch(branch) {
-    shell.exec('git checkout ' + branch, {silent: true}).output.trim();
+    shell.exec('git checkout ' + branch, { silent: true }).output.trim();
     return branch;
   }
 
