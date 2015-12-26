@@ -12,8 +12,10 @@ var npmops = require('./npm');
  * User defined variables
  * */
 var errorLog = [];
+var warningLog = [];
 var NO_ERROR = 200;
 var HAS_ERROR = 400;
+var HAS_WARNING = 422;
 var NO_PACKAGE_FOUND = 404;
 
 var argv = require('yargs')
@@ -136,12 +138,15 @@ function executeNPMInstall(done) {
         shell.cd(path);
 
         return npmops.install(function installPackage(exitCode, output) {
-          if (exitCode || output.toLowerCase().indexOf('failed') !== -1) {
+          var currentWarning = output.match(/((warn).+)/igm);
+          if (currentWarning.length) {
+            warningLog.push({
+              packagePath: path + 'package.json',
+              messages: currentWarning
+            });
+          }
+          if (exitCode || output.toLowerCase().indexOf('err!') !== -1) {
             errorLog.push(path + 'package.json');
-            if (argv.v) {
-              utils.log.info('Log for ' + path + 'package.json');
-              utils.log.error(output);
-            }
           }
 
           if (argv.v) {
@@ -158,6 +163,10 @@ function executeNPMInstall(done) {
 
         if (err) {
           return done(err);
+        }
+
+        if (warningLog.length) {
+          return done(null, HAS_WARNING);
         }
 
         if (errorLog.length) {
@@ -200,6 +209,13 @@ waterfall([
 
   if (err) {
     return utils.log.error(cmdOutput);
+  }
+
+  if (cmdOutput === HAS_WARNING) {
+    warningLog.forEach(function (warning) {
+      utils.log.info('Warnings given by npm during installing dependencies');
+      utils.log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'));
+    });
   }
 
   if (cmdOutput === HAS_ERROR) {
