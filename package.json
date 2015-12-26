@@ -17,6 +17,7 @@
     "async-each": "^1.0.0",
     "async-waterfall": "^0.1.5",
     "chalk": "^1.1.1",
+    "eslint-config-airbnb": "^2.1.1",
     "git-url-parse": "^4.1.0",
     "lodash": "^3.10.1",
     "shelljs": "^0.5.3",
