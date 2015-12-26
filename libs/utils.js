@@ -15,6 +15,10 @@ var Utils = (function UtilsWrapper() {
     error: function errorFn(msg) {
       console.log(chalk.bold.underline.red('Error'), '\n', chalk.red(msg));
     },
+
+    warn: function warn(msg) {
+      console.log(chalk.yellow(msg));
+    },
     success: function successFn(msg) {
       console.log(chalk.green(msg));
     }
