@@ -213,7 +213,7 @@ waterfall([
 
   if (cmdOutput === HAS_WARNING) {
     utils.log.info('Warnings given by npm during installing dependencies');
-    warningLog.forEach(function (warning) {
+    warningLog.forEach(function iterateWarnings(warning) {
       utils.log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'));
       console.log('');
     });
