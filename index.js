@@ -227,5 +227,5 @@ waterfall([
     return utils.log.error(errorLog.join('\r\n'));
   }
 
-  return utils.log.success('npm modules installed successfully!!!');
+  return utils.log.success('npm dependencies installed successfully!!!');
 });
