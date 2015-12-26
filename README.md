@@ -48,7 +48,7 @@ Todo List
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
 [npm-dependencies]: https://img.shields.io/david/nmrony/gtni.svg?style=flat-square
 [npm-dev-dependencies]: https://img.shields.io/david/dev/nmrony/gtni.svg?style=flat-square
-[npm-total-downloads]: https://img.shields.io/npm/dt/gtni.svg?style=flat-square
+[npm-total-downloads]: https://img.shields.io/npm/dm/gtni.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/gtni
 [dep-status]: https://david-dm.org/nmrony/gtni#info=dependencies&view=table
 [devdep-status]: https://david-dm.org/nmrony/gtni#info=devDependencies&view=table
