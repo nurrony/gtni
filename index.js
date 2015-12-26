@@ -44,8 +44,7 @@ var argv = require('yargs')
       }
     }).help('h').alias('h', 'help').argv;
   })
-  .command('fetch', 'git fetch and install npm dependencies',
-  function fetchSubCommands(yargs) {
+  .command('fetch', 'git fetch and install npm dependencies', function fetchSubCommands(yargs) {
     'use strict';
 
     argv = yargs.option({
@@ -63,8 +62,7 @@ var argv = require('yargs')
       }
     }).help('h').alias('h', 'help').argv;
   })
-  .command('clone', 'clone a git repository and install ' +
-  'npm dependencies', function cloneSubCommands(yargs) {
+  .command('clone', 'clone a git repository and install npm dependencies', function cloneSubCommands(yargs) {
     'use strict';
 
     argv = yargs.option({
