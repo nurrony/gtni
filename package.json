@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Install your npm dependencies with gtni as soon you pull, fetch or clone a git repo",
   "preferGlobal": true,
   "bin": {
