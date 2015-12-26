@@ -20,7 +20,7 @@ var NO_PACKAGE_FOUND = 404;
 
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .version(function printGtniVersion() {
+  .version(function printGTNIVersion() {
     'use strict';
     return 'gtni version ' + require('./package').version;
   })
@@ -42,7 +42,7 @@ var argv = require('yargs')
         'default': false,
         description: 'The "remote" repository that is the source'
       }
-    }).help('help').argv;
+    }).help('h').alias('h', 'help').argv;
   })
   .command('fetch', 'git fetch and install npm dependencies',
   function fetchSubCommands(yargs) {
@@ -61,7 +61,7 @@ var argv = require('yargs')
         'default': false,
         description: 'The "remote" repository that is the source'
       }
-    }).help('help').argv;
+    }).help('h').alias('h', 'help').argv;
   })
   .command('clone', 'clone a git repository and install ' +
   'npm dependencies', function cloneSubCommands(yargs) {
@@ -74,7 +74,7 @@ var argv = require('yargs')
         'default': false,
         description: 'remote branch name to clone'
       }
-    }).help('help').argv;
+    }).help('h').alias('h', 'help').argv;
   })
   .demand(1, 'must provide a valid command')
   .example(
