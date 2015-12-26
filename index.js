@@ -138,8 +138,8 @@ function executeNPMInstall(done) {
         shell.cd(path);
 
         return npmops.install(function installPackage(exitCode, output) {
-          var currentWarning = output.match(/((warn).+)/igm);
-          if (currentWarning.length) {
+          var currentWarning = output.match(/((warn).+)/igm) || [];
+          if (currentWarning && currentWarning.length) {
             warningLog.push({
               packagePath: path + 'package.json',
               messages: currentWarning
@@ -212,9 +212,10 @@ waterfall([
   }
 
   if (cmdOutput === HAS_WARNING) {
+    utils.log.info('Warnings given by npm during installing dependencies');
     warningLog.forEach(function (warning) {
-      utils.log.info('Warnings given by npm during installing dependencies');
       utils.log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'));
+      console.log('');
     });
   }
 
