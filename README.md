@@ -38,7 +38,8 @@ Todo List
 - [x] Pull support for most used `git pull` options
 - [x] Fetch support for most used `git fetch` options
 - [x] Support for `git clone`
-- [x] **NODE_ENV** support for `npm install`
+- [x] `NODE_ENV` support for `npm install`
+- [ ] Show warnings during `npm` dependencies during installation
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
 - [ ] Support for merge options in `git pull`
