@@ -38,7 +38,8 @@ Todo List
 - [x] Pull support for most used `git pull` options
 - [x] Fetch support for most used `git fetch` options
 - [x] Support for `git clone`
-- [x] **NODE_ENV** support for `npm install`
+- [x] `NODE_ENV` support for `npm install`
+- [x] Show warnings during `npm` dependencies during installation
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
 - [ ] Support for merge options in `git pull`
@@ -47,7 +48,7 @@ Todo List
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
 [npm-dependencies]: https://img.shields.io/david/nmrony/gtni.svg?style=flat-square
 [npm-dev-dependencies]: https://img.shields.io/david/dev/nmrony/gtni.svg?style=flat-square
-[npm-total-downloads]: https://img.shields.io/npm/dt/gtni.svg?style=flat-square
+[npm-total-downloads]: https://img.shields.io/npm/dm/gtni.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/gtni
 [dep-status]: https://david-dm.org/nmrony/gtni#info=dependencies&view=table
 [devdep-status]: https://david-dm.org/nmrony/gtni#info=devDependencies&view=table
