@@ -61,17 +61,6 @@ var Utils = (function UtilsWrapper() {
     return done(null, listArray);
   }
 
-  /*  function directoryWithPackageJSON(output, done) {
-   var files = globule.find({
-   src: ['**!/package.json', '!**!/node_modules/!**!/package.json'],
-   prefixBase: true,
-   srcBase: output
-   }).map(function (file) {
-   return file.replace('package.json', ' ').trim();
-   });
-   return done(null, files);
-   }*/
-
   function getRepoName(repoUrl) {
     return gitUrlParser(repoUrl).name;
   }
