@@ -17,8 +17,8 @@
     "async-each": "^1.0.0",
     "async-waterfall": "^0.1.5",
     "chalk": "^1.1.1",
-    "git-url-parse": "^4.1.0",
-    "lodash": "^3.10.1",
+    "git-url-parse": "^5.0.1",
+    "lodash": "^4.2.0",
     "shelljs": "^0.5.3",
     "yargs": "^3.31.0"
   },
