@@ -14,9 +14,9 @@ var GitPull = (function GitPullWrapper() {
       utils.log.info('Pulling Git Repository...');
 
       if (branchToPull) {
-        args = 'origin ' + branchToPull;
+        args = (argv.v ? '-v ' : '') + 'origin ' + branchToPull;
       } else if (repoToPull) {
-        args = repoToPull;
+        args = (argv.v ? '-v ' : '') + repoToPull;
       } else {
         args = utils.prepareArguments(argv);
       }

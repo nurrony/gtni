@@ -100,7 +100,7 @@ var Utils = (function UtilsWrapper() {
 
     return lodash.map(gitOptions, function appendBasePath(value, key) {
       if (typeof value === 'boolean') {
-        if(value) {
+        if (value) {
           return key.length > 1 ? '--' + key : '-' + key;
         } else {
           return;

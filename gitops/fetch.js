@@ -7,6 +7,7 @@ var GitFetch = (function GitFetchWrapper() {
 
   function executeFetch(argv, done) {
     var args = '';
+    var cmd = '';
     var branchToFetch = argv.b || false;
     var repoToFetch = argv.repo || false;
 
@@ -14,14 +15,16 @@ var GitFetch = (function GitFetchWrapper() {
       utils.log.info('Fetching Git Repository...');
 
       if (branchToFetch) {
-        args = 'origin ' + branchToFetch;
+        args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch;
       } else if (repoToFetch) {
-        args = repoToFetch;
+        args = + (argv.v ? '-v ' : '') + repoToFetch ;
       } else {
         args = utils.prepareArguments(argv);
       }
 
-      shell.exec('git fetch ' + args, {
+      cmd = 'git fetch ' + args;
+
+      shell.exec(cmd, {
         silent: true,
         async: true
       }, function fetchCompleted(exitCode, output) {
