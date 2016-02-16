@@ -99,7 +99,6 @@ var Utils = (function UtilsWrapper() {
     ]);
 
     return lodash.map(gitOptions, function appendBasePath(value, key) {
-      console.log('in map', value,typeof value);
       if (typeof value === 'boolean') {
         if(value) {
           return key.length > 1 ? '--' + key : '-' + key;
