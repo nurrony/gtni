@@ -82,10 +82,6 @@ var Utils = (function UtilsWrapper() {
     return branch;
   }
 
-  function isFileExists(fileWithPath, done) {
-    return fs.exists(fileWithPath, done);
-  }
-
   function prepareArguments(args) {
     var gitOptions = lodash.omit(args, [
       '$0',
@@ -134,7 +130,7 @@ var Utils = (function UtilsWrapper() {
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
     getRepoName: getRepoName,
-    isFileExists: isFileExists,
+    isExists: fs.stat,
     log: logger,
     packagePaths: getPackageJSONPath,
     checkOutBranch: checkOutToBranch,
