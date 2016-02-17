@@ -12,7 +12,7 @@ var GitFetch = (function GitFetchWrapper() {
     var repoToFetch = argv.repo || false;
 
     if (utils.isGitRepo()) {
-      utils.log.info('Fetching Git Repository...');
+      utils.log.info('Fetching ' + ((!branchToFetch) ? 'current': branchToFetch) + ' branch...');
 
       if (branchToFetch) {
         args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch;
@@ -34,6 +34,8 @@ var GitFetch = (function GitFetchWrapper() {
 
         return done(exitCode, output);
       });
+    } else {
+      return done(true, 'Current directory is not a git repository');
     }
   }
 
