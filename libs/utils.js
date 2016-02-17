@@ -1,6 +1,7 @@
 var shell = require('shelljs');
 var chalk = require('chalk');
-var lodash = require('lodash');
+var omit = require('lodash/omit');
+var map = require('lodash/map');
 var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
 var waterfall = require('async-waterfall');
@@ -68,7 +69,7 @@ var Utils = (function UtilsWrapper() {
   function isUnderGitRepo() {
     return shell.exec('git rev-parse --is-inside-work-tree', {
       silent: true
-    }).output;
+    }).output.trim();
   }
 
   function getCurrentBranchName() {
@@ -82,12 +83,8 @@ var Utils = (function UtilsWrapper() {
     return branch;
   }
 
-  function isFileExists(fileWithPath, done) {
-    return fs.exists(fileWithPath, done);
-  }
-
   function prepareArguments(args) {
-    var gitOptions = lodash.omit(args, [
+    var gitOptions = omit(args, [
       '$0',
       'h',
       'help',
@@ -98,9 +95,13 @@ var Utils = (function UtilsWrapper() {
       'repository'
     ]);
 
-    return lodash.map(gitOptions, function appendBasePath(value, key) {
+    return map(gitOptions, function appendBasePath(value, key) {
       if (typeof value === 'boolean') {
-        return key.length > 1 ? '--' + key : '-' + key;
+        if (value) {
+          return key.length > 1 ? '--' + key : '-' + key;
+        } else {
+          return;
+        }
       }
 
       if (key.length > 1) {
@@ -130,7 +131,7 @@ var Utils = (function UtilsWrapper() {
     isGitRepo: isUnderGitRepo,
     prepareArguments: prepareArguments,
     getRepoName: getRepoName,
-    isFileExists: isFileExists,
+    isExists: fs.stat,
     log: logger,
     packagePaths: getPackageJSONPath,
     checkOutBranch: checkOutToBranch,

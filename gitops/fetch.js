@@ -7,21 +7,24 @@ var GitFetch = (function GitFetchWrapper() {
 
   function executeFetch(argv, done) {
     var args = '';
+    var cmd = '';
     var branchToFetch = argv.b || false;
     var repoToFetch = argv.repo || false;
 
     if (utils.isGitRepo()) {
-      utils.log.info('Fetching Git Repository...');
+      utils.log.info('Fetching ' + ((!branchToFetch) ? 'current': branchToFetch) + ' branch...');
 
       if (branchToFetch) {
-        args = 'origin ' + branchToFetch;
+        args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch;
       } else if (repoToFetch) {
-        args = repoToFetch;
+        args = + (argv.v ? '-v ' : '') + repoToFetch ;
       } else {
         args = utils.prepareArguments(argv);
       }
 
-      shell.exec('git fetch ' + args, {
+      cmd = 'git fetch ' + args;
+
+      shell.exec(cmd, {
         silent: true,
         async: true
       }, function fetchCompleted(exitCode, output) {
@@ -31,6 +34,8 @@ var GitFetch = (function GitFetchWrapper() {
 
         return done(exitCode, output);
       });
+    } else {
+      return done(true, 'Current directory is not a git repository');
     }
   }
 

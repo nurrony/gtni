@@ -20,11 +20,6 @@ var NO_PACKAGE_FOUND = 404;
 
 var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .version(function printGTNIVersion() {
-    'use strict';
-    return 'gtni version ' + require('./package').version;
-  })
-  .alias('v', 'version')
   .command('pull', 'git pull and install npm dependencies',
   function pullSubCommands(yargs) {
     'use strict';
@@ -71,6 +66,12 @@ var argv = require('yargs')
         type: 'string',
         'default': false,
         description: 'remote branch name to clone'
+      },
+      verbose: {
+        alias: 'v',
+        type: 'boolean',
+        'default': false,
+        description: 'verbose '
       }
     }).help('h').alias('h', 'help').argv;
   })
@@ -80,7 +81,10 @@ var argv = require('yargs')
   'git pull and install npm packages')
   .help('h')
   .alias('h', 'help')
-  .argv;
+  .version(function printGTNIVersion() {
+    'use strict';
+    return 'gtni version ' + require('./package').version;
+  }).argv;
 
 shell.config = shellConfig;
 
