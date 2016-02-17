@@ -8,7 +8,8 @@ var GitClone = (function GitCloneWrapper() {
     var args = '';
     var cmd = '';
     var currentPath = shell.pwd().trim();
-    var clonePath = currentPath + '/' + (argv._[2] || utils.getRepoName(argv._[1]));
+    var cloneDirName = argv._[2] || utils.getRepoName(argv._[1]);
+    var clonePath = currentPath + '/' + cloneDirName;
     var repoNPath = argv._[1] + ' ' +
       (typeof argv._[2] === 'undefined' ? '' : argv._[2]);
 
@@ -33,7 +34,7 @@ var GitClone = (function GitCloneWrapper() {
           return done(exitCode, output);
         });
       } else if (stat.isDirectory()) {
-        return done(true, argv._[2] + ' directory is already exists');
+        return done(true, cloneDirName + ' directory is already exists');
       }
     });
   }
