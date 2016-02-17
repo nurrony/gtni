@@ -68,7 +68,7 @@ var Utils = (function UtilsWrapper() {
   function isUnderGitRepo() {
     return shell.exec('git rev-parse --is-inside-work-tree', {
       silent: true
-    }).output;
+    }).output.trim();
   }
 
   function getCurrentBranchName() {
