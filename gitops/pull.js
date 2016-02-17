@@ -11,7 +11,7 @@ var GitPull = (function GitPullWrapper() {
     var repoToPull = argv.repo || false;
 
     if (utils.isGitRepo()) {
-      utils.log.info('Pulling Git Repository...');
+      utils.log.info('Pulling ' + ((!branchToPull) ? 'current': branchToPull) + ' branch...');
 
       if (branchToPull) {
         args = (argv.v ? '-v ' : '') + 'origin ' + branchToPull;
@@ -31,6 +31,8 @@ var GitPull = (function GitPullWrapper() {
 
         return done(exitCode, output);
       });
+    } else {
+      return done(true, 'Current directory is not a git repository');
     }
   }
 
