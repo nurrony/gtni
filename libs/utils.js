@@ -1,6 +1,7 @@
 var shell = require('shelljs');
 var chalk = require('chalk');
-var lodash = require('lodash');
+var omit = require('lodash/omit');
+var map = require('lodash/map');
 var gitUrlParser = require('git-url-parse');
 var fs = require('fs');
 var waterfall = require('async-waterfall');
@@ -83,7 +84,7 @@ var Utils = (function UtilsWrapper() {
   }
 
   function prepareArguments(args) {
-    var gitOptions = lodash.omit(args, [
+    var gitOptions = omit(args, [
       '$0',
       'h',
       'help',
@@ -94,7 +95,7 @@ var Utils = (function UtilsWrapper() {
       'repository'
     ]);
 
-    return lodash.map(gitOptions, function appendBasePath(value, key) {
+    return map(gitOptions, function appendBasePath(value, key) {
       if (typeof value === 'boolean') {
         if (value) {
           return key.length > 1 ? '--' + key : '-' + key;
