@@ -7,7 +7,9 @@ var GitClone = (function GitCloneWrapper() {
   function executeClone(argv, done) {
     var args = '';
     var cmd = '';
-    var currentPath = shell.pwd();
+    var currentPath = shell.pwd().trim();
+    var cloneDirName = argv._[2] || utils.getRepoName(argv._[1]);
+    var clonePath = currentPath + '/' + cloneDirName;
     var repoNPath = argv._[1] + ' ' +
       (typeof argv._[2] === 'undefined' ? '' : argv._[2]);
 
@@ -19,7 +21,7 @@ var GitClone = (function GitCloneWrapper() {
 
     cmd = 'git clone ' + args + ' ' + repoNPath;
 
-    utils.isExists(currentPath + '/' + argv._[2], function(err, stat) {
+    utils.isExists(clonePath, function(err, stat) {
       if (err && err.code === 'ENOENT') {
         utils.log.info('Cloning your repository...');
         shell.exec(cmd, {
@@ -32,7 +34,7 @@ var GitClone = (function GitCloneWrapper() {
           return done(exitCode, output);
         });
       } else if (stat.isDirectory()) {
-        return done(true, argv._[2] + ' directory is already exists');
+        return done(true, cloneDirName + ' directory is already exists');
       }
     });
   }
