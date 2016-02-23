@@ -24,7 +24,7 @@ Commands:
 
 Options:
   -h, --help     Show help                                             [boolean]
-  -v, --version  Show version number                                   [boolean]
+  --version      Show version number                                   [boolean]
 
 Examples:
   [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
