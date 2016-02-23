@@ -17,13 +17,13 @@
     "async-each": "^1.0.0",
     "async-waterfall": "^0.1.5",
     "chalk": "^1.1.1",
-    "git-url-parse": "^5.0.1",
+    "git-url-parse": "^6.0.1",
     "lodash": "^4.4.0",
     "shelljs": "^0.6.0",
     "yargs": "^4.1.0"
   },
   "devDependencies": {
-    "eslint": "^2.1.0"
+    "eslint": "^2.2.0"
   },
   "repository": {
     "type": "git",
