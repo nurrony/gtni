@@ -1,4 +1,14 @@
-import test from 'tape';
+import tape from 'tape';
+import utils from '../libs/utils'
 
-console.log(test);
+tape('should get corrent repo name', (test) => {
+  const repoURL = 'git@github.com:nmrony/gtni.git'
+  const input = utils.getRepoName(repoURL)
+  const output = 'gtni'
+  
+  test.equal(input, output)
+  test.end();
+})
+
+
 
