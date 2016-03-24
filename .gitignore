@@ -13,7 +13,8 @@ Session.vim
 ../.idea
 .idea/gtni.iml
 out
-gen### OSX template
+gen
+### OSX template
 .DS_Store
 .AppleDouble
 .LSOverride
