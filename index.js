@@ -22,7 +22,6 @@ var argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
   .command('pull', 'git pull and install npm dependencies',
   function pullSubCommands(yargs) {
-    'use strict';
 
     argv = yargs.option({
       branch: {
@@ -40,7 +39,6 @@ var argv = require('yargs')
     }).help('h').alias('h', 'help').argv;
   })
   .command('fetch', 'git fetch and install npm dependencies', function fetchSubCommands(yargs) {
-    'use strict';
 
     argv = yargs.option({
       branch: {
@@ -58,7 +56,6 @@ var argv = require('yargs')
     }).help('h').alias('h', 'help').argv;
   })
   .command('clone', 'clone a git repository and install npm dependencies', function cloneSubCommands(yargs) {
-    'use strict';
 
     argv = yargs.option({
       branch: {
@@ -82,14 +79,12 @@ var argv = require('yargs')
   .help('h')
   .alias('h', 'help')
   .version(function printGTNIVersion() {
-    'use strict';
-    return 'gtni version ' + require('./package').version;
+        return 'gtni version ' + require('./package').version;
   }).argv;
 
 shell.config = shellConfig;
 
 function executeGitOperation(done) {
-  'use strict';
 
   var command = argv._[0];
 
@@ -106,12 +101,12 @@ function executeGitOperation(done) {
 }
 
 function executeNPMInstall(done) {
-  'use strict';
 
   var currentBranchName = utils.currentBranchName();
   var checkoutBranchName = (argv.b &&
-  typeof argv.b === 'string' &&
-  currentBranchName !== checkoutBranchName) ? argv.b : false;
+                          typeof argv.b === 'string' &&
+                          currentBranchName !== checkoutBranchName
+                        ) ? argv.b : false;
 
   var branchName = checkoutBranchName ?
     utils.checkOutBranch(checkoutBranchName) : currentBranchName;
@@ -181,7 +176,6 @@ function executeNPMInstall(done) {
 }
 
 function installNPMPackages(gitOpOutput, done) {
-  'use strict';
 
   var cmd = argv._[0];
   var cloneDir = '';
@@ -203,7 +197,6 @@ waterfall([
   executeGitOperation,
   installNPMPackages
 ], function allDone(err, cmdOutput) {
-  'use strict';
 
   if (err === NO_PACKAGE_FOUND) {
     return utils.log.info(cmdOutput);

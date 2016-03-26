@@ -2,7 +2,6 @@
 var shell = require('shelljs');
 
 var NPMOps = (function NPMOpsWrapper() {
-  'use strict';
 
   function executeInstall(done) {
     var env = process.env.NODE_ENV ? '--' + process.env.NODE_ENV : '';

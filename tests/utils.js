@@ -29,7 +29,7 @@ tape('prepareArguments return git options', (test) => {
     b: 'test-branch',
     branch: 'test-branch',
     u: true,
-    '$0': ['test']
+    $0: ['test']
   }
   const result = utils.prepareArguments(input);
   const expection = '--all -u'

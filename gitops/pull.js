@@ -3,7 +3,6 @@ var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
 var GitPull = (function GitPullWrapper() {
-  'use strict';
 
   function executePull(argv, done) {
     var args = '';

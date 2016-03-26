@@ -2,8 +2,6 @@ var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
 var GitClone = (function GitCloneWrapper() {
-  'use strict';
-
   function executeClone(argv, done) {
     var args = '';
     var cmd = '';

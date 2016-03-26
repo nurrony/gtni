@@ -3,7 +3,6 @@ var shell = require('shelljs');
 var utils = require('./../libs/utils');
 
 var GitFetch = (function GitFetchWrapper() {
-  'use strict';
 
   function executeFetch(argv, done) {
     var args = '';

@@ -7,7 +7,6 @@ var fs = require('fs');
 var waterfall = require('async-waterfall');
 
 var Utils = (function UtilsWrapper() {
-  'use strict';
 
   var logger = {
     info: function infoFn(msg) {
