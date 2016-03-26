@@ -4,6 +4,7 @@
   "env": {
     "node": true
   },
+  "parser": "babel-eslint",
   "rules": {
     "comma-dangle": [2, "never"],
     "no-console": 0,

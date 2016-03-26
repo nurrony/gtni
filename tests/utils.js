@@ -37,8 +37,3 @@ tape('prepareArguments return git options', (test) => {
   test.equal(result, expection);
   test.end();
 })
-
-
-
-
-
