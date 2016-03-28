@@ -2,7 +2,7 @@ gtni
 ====
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
-[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url]
+[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Build Status](https://travis-ci.org/nmrony/gtni.svg?branch=master)](https://travis-ci.org/nmrony/gtni)
 
 >For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
