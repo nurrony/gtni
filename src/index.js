@@ -1,43 +1,26 @@
 #!/usr/bin/env node
 
-var shellConfig = require('./shellconfig');
-var shell = require('shelljs');
-var waterfall = require('async-waterfall');
-var each = require('async-each');
-var utils = require('./libs/utils');
-var gitops = require('./gitops');
-var npmops = require('./npm');
-
+import shellConfig from './shellconfig';
+/*import shell from 'shelljs');
+import waterfall from 'async-waterfall';
+import each from 'async-each';
+import utils from './libs/utils';
+import gitops from './gitops';
+import npmops from './npm';*/
+import { pullSubCommands } from './helpers';
 /**
  * User defined variables
  * */
-var errorLog = [];
-var warningLog = [];
-var NO_ERROR = 200;
-var HAS_ERROR = 400;
-var HAS_WARNING = 422;
-var NO_PACKAGE_FOUND = 404;
+const errorLog = [];
+const warningLog = [];
+const NO_ERROR = 200;
+const HAS_ERROR = 400;
+const HAS_WARNING = 422;
+const NO_PACKAGE_FOUND = 404;
 
-var argv = require('yargs')
+const argv = require('yargs')
   .usage('Usage: $0 <command> [options]')
-  .command('pull', 'git pull and install npm dependencies',
-  function pullSubCommands(yargs) {
-
-    argv = yargs.option({
-      branch: {
-        alias: 'b',
-        type: 'string',
-        'default': false,
-        description: 'remote branch name to pull'
-      },
-      repository: {
-        alias: 'repo',
-        type: 'string',
-        'default': false,
-        description: 'The "remote" repository that is the source'
-      }
-    }).help('h').alias('h', 'help').argv;
-  })
+  .command('pull', 'git pull and install npm dependencies', pullSubCommands)
   .command('fetch', 'git fetch and install npm dependencies', function fetchSubCommands(yargs) {
 
     argv = yargs.option({
@@ -83,144 +66,3 @@ var argv = require('yargs')
   }).argv;
 
 shell.config = shellConfig;
-
-function executeGitOperation(done) {
-
-  var command = argv._[0];
-
-  switch (command) {
-    case 'pull':
-      return gitops.pull(argv, done);
-    case 'fetch':
-      return gitops.fetch(argv, done);
-    case 'clone':
-      return gitops.clone(argv, done);
-    default:
-      return require('yargs').showHelp();
-  }
-}
-
-function executeNPMInstall(done) {
-
-  var currentBranchName = utils.currentBranchName();
-  var checkoutBranchName = (argv.b &&
-                          typeof argv.b === 'string' &&
-                          currentBranchName !== checkoutBranchName
-                        ) ? argv.b : false;
-
-  var branchName = checkoutBranchName ?
-    utils.checkOutBranch(checkoutBranchName) : currentBranchName;
-
-  utils.log.info('listing all package.json files in this project...');
-
-  utils.packagePaths(branchName,
-    function packageListCompleted(error, packagePaths) {
-      if (error) {
-        return done(error);
-      }
-
-      // is there any package.json?
-      if (!packagePaths.length) {
-        return done(
-          NO_PACKAGE_FOUND,
-          'No package.json not found in your project. ' +
-          'Skipping dependency installation.'
-        );
-      }
-
-      utils.log.info('Installing npm modules for branch ' +
-        branchName + '. It may take some time...');
-
-      each(packagePaths, function packageIterator(path, cb) {
-        shell.cd(path);
-
-        return npmops.install(function installPackage(exitCode, output) {
-          var currentWarning = output.match(/((warn).+)/igm) || [];
-          if (currentWarning && currentWarning.length) {
-            warningLog.push({
-              packagePath: path + 'package.json',
-              messages: currentWarning
-            });
-          }
-          if (exitCode || output.toLowerCase().indexOf('err!') !== -1) {
-            errorLog.push(path + 'package.json');
-          }
-
-          if (argv.v) {
-            utils.log.info('Log for ' + path + 'package.json');
-            utils.log.info(output);
-          }
-
-          return cb(false);
-        });
-      }, function installCompleted(err) {
-        if (checkoutBranchName) {
-          utils.checkOutBranch(currentBranchName);
-        }
-
-        if (err) {
-          return done(err);
-        }
-
-        if (warningLog.length) {
-          return done(null, HAS_WARNING);
-        }
-
-        if (errorLog.length) {
-          return done(null, HAS_ERROR);
-        }
-
-        return done(null, NO_ERROR);
-      });
-    });
-}
-
-function installNPMPackages(gitOpOutput, done) {
-
-  var cmd = argv._[0];
-  var cloneDir = '';
-
-  utils.log.success('git ' + cmd + ' ends successfully!!');
-  if (argv.v) {
-    utils.log.info(gitOpOutput);
-  }
-
-  if (cmd === 'clone') {
-    cloneDir = argv._[2] || utils.getRepoName(argv._[1]);
-    shell.cd(cloneDir + '/');
-  }
-
-  return executeNPMInstall(done);
-}
-
-waterfall([
-  executeGitOperation,
-  installNPMPackages
-], function allDone(err, cmdOutput) {
-
-  if (err === NO_PACKAGE_FOUND) {
-    return utils.log.info(cmdOutput);
-  }
-
-  if (err) {
-    return utils.log.error(cmdOutput);
-  }
-
-  if (cmdOutput === HAS_WARNING) {
-    utils.log.info('Warnings given by npm during installing dependencies');
-    warningLog.forEach(function iterateWarnings(warning) {
-      utils.log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'));
-      console.log('');
-    });
-  }
-
-  if (cmdOutput === HAS_ERROR) {
-    utils.log.info('npm modules installation ' +
-      'has finished with error(s). ' +
-      'Please check npm-debug.log file in ' +
-      'reported package.json directory');
-    return utils.log.error(errorLog.join('\r\n'));
-  }
-
-  return utils.log.success('npm dependencies installed successfully!!!');
-});

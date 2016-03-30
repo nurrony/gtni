@@ -9,7 +9,7 @@
   "scripts": {
     "test": "tape -r babel-register tests/**/*.js | ./node_modules/.bin/tap-spec",
     "lint": "eslint . && echo 'No linting error found'",
-    "build": "babel",
+    "compile": "babel --presets es2015,stage-0 -d dist/ src/",
     "preinstall": "echo \"This package depends on git. Please install, if you do not have it yet\""
   },
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
