@@ -4,7 +4,7 @@
   "description": "Install your all npm dependencies recursively with gtni while you are doing git clone, fetch or pull",
   "preferGlobal": true,
   "bin": {
-    "gtni": "index.js"
+    "gtni": "dist/index.js"
   },
   "scripts": {
     "test": "tape -r babel-register tests/**/*.js | ./node_modules/.bin/tap-spec",
