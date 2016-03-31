@@ -1,5 +1,5 @@
 import tape from 'tape';
-import utils from '../libs/utils'
+import utils from '../src/libs/utils'
 
 tape('should get corrent repo name', (nested) => {
   nested.test('from ssh url', (t1) => {
