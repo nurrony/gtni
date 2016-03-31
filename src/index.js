@@ -1,92 +1,48 @@
 #!/usr/bin/env node
 
-var shellConfig = require('./shellconfig');
-var shell = require('shelljs');
-var waterfall = require('async-waterfall');
-var each = require('async-each');
-var utils = require('./libs/utils');
-var gitops = require('./gitops');
-var npmops = require('./npm');
+import shell from 'shelljs'
+import yargs from 'yargs';
+import waterfall from 'async-waterfall';
+import each from 'async-each';
+
+import shellConfig from './shellconfig';
+import utils from './libs/utils';
+import gitops from './gitops';
+import npmInstall from './npm';
+import {
+  pullSubCommands,
+  fetchSubCommands,
+  cloneSubCommands
+} from './helpers';
 
 /**
- * User defined variables
+ * User defined constiables
  * */
-var errorLog = [];
-var warningLog = [];
-var NO_ERROR = 200;
-var HAS_ERROR = 400;
-var HAS_WARNING = 422;
-var NO_PACKAGE_FOUND = 404;
+const errorLog = [];
+const warningLog = [];
+const NO_ERROR = 200;
+const HAS_ERROR = 400;
+const HAS_WARNING = 422;
+const NO_PACKAGE_FOUND = 404;
 
-var argv = require('yargs')
-  .usage('Usage: $0 <command> [options]')
-  .command('pull', 'git pull and install npm dependencies',
-  function pullSubCommands(yargs) {
-
-    argv = yargs.option({
-      branch: {
-        alias: 'b',
-        type: 'string',
-        'default': false,
-        description: 'remote branch name to pull'
-      },
-      repository: {
-        alias: 'repo',
-        type: 'string',
-        'default': false,
-        description: 'The "remote" repository that is the source'
-      }
-    }).help('h').alias('h', 'help').argv;
-  })
-  .command('fetch', 'git fetch and install npm dependencies', function fetchSubCommands(yargs) {
-
-    argv = yargs.option({
-      branch: {
-        alias: 'b',
-        type: 'string',
-        'default': false,
-        description: 'remote branch name to fetch'
-      },
-      repository: {
-        alias: 'repo',
-        type: 'string',
-        'default': false,
-        description: 'The "remote" repository that is the source'
-      }
-    }).help('h').alias('h', 'help').argv;
-  })
-  .command('clone', 'clone a git repository and install npm dependencies', function cloneSubCommands(yargs) {
-
-    argv = yargs.option({
-      branch: {
-        alias: 'b',
-        type: 'string',
-        'default': false,
-        description: 'remote branch name to clone'
-      },
-      verbose: {
-        alias: 'v',
-        type: 'boolean',
-        'default': false,
-        description: 'verbose '
-      }
-    }).help('h').alias('h', 'help').argv;
-  })
+const argv = yargs.usage('Usage: $0 <command> [options]')
+  .command('pull', 'git pull and install npm dependencies', pullSubCommands)
+  .command('fetch', 'git fetch and install npm dependencies', fetchSubCommands)
+  .command('clone', 'clone a git repository and install npm dependencies', cloneSubCommands)
   .demand(1, 'must provide a valid command')
   .example(
   '[NODE_ENV=<env>] $0 pull [git-options]',
   'git pull and install npm packages')
   .help('h')
   .alias('h', 'help')
-  .version(function printGTNIVersion() {
-        return 'gtni version ' + require('./package').version;
-  }).argv;
+  .version(() => 'gtni version ' + require('../package.json').version)
+  .argv;
 
 shell.config = shellConfig;
 
 function executeGitOperation(done) {
 
-  var command = argv._[0];
+  const command = argv._[0];
 
   switch (command) {
     case 'pull':
@@ -102,19 +58,17 @@ function executeGitOperation(done) {
 
 function executeNPMInstall(done) {
 
-  var currentBranchName = utils.currentBranchName();
-  var checkoutBranchName = (argv.b &&
+  const currentBranchName = utils.currentBranchName();
+  const checkoutBranchName = (argv.b &&
                           typeof argv.b === 'string' &&
                           currentBranchName !== checkoutBranchName
                         ) ? argv.b : false;
 
-  var branchName = checkoutBranchName ?
-    utils.checkOutBranch(checkoutBranchName) : currentBranchName;
+  const branchName = checkoutBranchName ? utils.checkOutBranch(checkoutBranchName) : currentBranchName;
 
   utils.log.info('listing all package.json files in this project...');
 
-  utils.packagePaths(branchName,
-    function packageListCompleted(error, packagePaths) {
+  utils.packagePaths(branchName, (error, packagePaths) => {
       if (error) {
         return done(error);
       }
@@ -128,20 +82,20 @@ function executeNPMInstall(done) {
         );
       }
 
-      utils.log.info('Installing npm modules for branch ' +
-        branchName + '. It may take some time...');
+      utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
 
-      each(packagePaths, function packageIterator(path, cb) {
+      each(packagePaths, (path, cb) => {
         shell.cd(path);
+        return npmInstall((exitCode, output) => {
+          const currentWarning = output.match(/((warn).+)/igm) || [];
 
-        return npmops.install(function installPackage(exitCode, output) {
-          var currentWarning = output.match(/((warn).+)/igm) || [];
           if (currentWarning && currentWarning.length) {
             warningLog.push({
               packagePath: path + 'package.json',
               messages: currentWarning
             });
           }
+
           if (exitCode || output.toLowerCase().indexOf('err!') !== -1) {
             errorLog.push(path + 'package.json');
           }
@@ -153,7 +107,7 @@ function executeNPMInstall(done) {
 
           return cb(false);
         });
-      }, function installCompleted(err) {
+      }, (err) => {
         if (checkoutBranchName) {
           utils.checkOutBranch(currentBranchName);
         }
@@ -175,10 +129,11 @@ function executeNPMInstall(done) {
     });
 }
 
+
 function installNPMPackages(gitOpOutput, done) {
 
-  var cmd = argv._[0];
-  var cloneDir = '';
+  const cmd = argv._[0];
+  let cloneDir = '';
 
   utils.log.success('git ' + cmd + ' ends successfully!!');
   if (argv.v) {
@@ -196,7 +151,7 @@ function installNPMPackages(gitOpOutput, done) {
 waterfall([
   executeGitOperation,
   installNPMPackages
-], function allDone(err, cmdOutput) {
+], (err, cmdOutput) => {
 
   if (err === NO_PACKAGE_FOUND) {
     return utils.log.info(cmdOutput);
