@@ -1,4 +1,4 @@
-import tape from 'tape';
+import tape from 'tape'
 import utils from '../src/libs/utils'
 
 tape('should get corrent repo name', (nested) => {
