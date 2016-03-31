@@ -8,7 +8,7 @@ import each from 'async-each';
 import shellConfig from './shellconfig';
 import utils from './libs/utils';
 import gitops from './gitops';
-import npmops from './npm';
+import npmInstall from './npm';
 import {
   pullSubCommands,
   fetchSubCommands,
@@ -82,12 +82,11 @@ function executeNPMInstall(done) {
         );
       }
 
-      utils.log.info('Installing npm modules for branch ' +
-        branchName + '. It may take some time...');
+      utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
 
       each(packagePaths, (path, cb) => {
         shell.cd(path);
-        return npmops.install((exitCode, output) => {
+        return npmInstall((exitCode, output) => {
           const currentWarning = output.match(/((warn).+)/igm) || [];
 
           if (currentWarning && currentWarning.length) {

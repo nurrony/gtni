@@ -1,43 +1,33 @@
+import shell from 'shelljs';
+import utils from './../libs/utils';
 
-var shell = require('shelljs');
-var utils = require('./../libs/utils');
+export default function pull(argv, done) {
+  let args = '';
+  const branchToPull = argv.b || false;
+  const repoToPull = argv.repo || false;
 
-var GitPull = (function GitPullWrapper() {
+  if (utils.isGitRepo()) {
+    utils.log.info('Pulling ' + ((!branchToPull) ? 'current' : branchToPull) + ' branch...');
 
-  function executePull(argv, done) {
-    var args = '';
-    var branchToPull = argv.b || false;
-    var repoToPull = argv.repo || false;
+    if (branchToPull) {
+      args = (argv.v ? '-v ' : '') + 'origin ' + branchToPull;
+    } else if (repoToPull) {
+      args = (argv.v ? '-v ' : '') + repoToPull;
+    } else {
+      args = utils.prepareArguments(argv);
+    }
 
-    if (utils.isGitRepo()) {
-      utils.log.info('Pulling ' + ((!branchToPull) ? 'current': branchToPull) + ' branch...');
-
-      if (branchToPull) {
-        args = (argv.v ? '-v ' : '') + 'origin ' + branchToPull;
-      } else if (repoToPull) {
-        args = (argv.v ? '-v ' : '') + repoToPull;
-      } else {
-        args = utils.prepareArguments(argv);
+    shell.exec('git pull ' + args, {
+      silent: true,
+      async: true
+    }, (exitCode, output) => {
+      if (!exitCode) {
+        return done(null, output);
       }
 
-      shell.exec('git pull ' + args, {
-        silent: true,
-        async: true
-      }, function pullCompleted(exitCode, output) {
-        if (!exitCode) {
-          return done(null, output);
-        }
-
-        return done(exitCode, output);
-      });
-    } else {
-      return done(true, 'Current directory is not a git repository');
-    }
+      return done(exitCode, output);
+    });
+  } else {
+    return done(true, 'Current directory is not a git repository');
   }
-
-  return {
-    pull: executePull
-  };
-})();
-
-module.exports = GitPull;
+}

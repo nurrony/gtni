@@ -1,46 +1,36 @@
+import shell from 'shelljs';
+import utils from './../libs/utils';
 
-var shell = require('shelljs');
-var utils = require('./../libs/utils');
+export default function fetch(argv, done) {
+  let args = '';
+  let cmd = '';
+  const branchToFetch = argv.b || false;
+  const repoToFetch = argv.repo || false;
 
-var GitFetch = (function GitFetchWrapper() {
+  if (utils.isGitRepo()) {
+    utils.log.info('Fetching ' + ((!branchToFetch) ? 'current' : branchToFetch) + ' branch...');
 
-  function executeFetch(argv, done) {
-    var args = '';
-    var cmd = '';
-    var branchToFetch = argv.b || false;
-    var repoToFetch = argv.repo || false;
+    if (branchToFetch) {
+      args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch;
+    } else if (repoToFetch) {
+      args = +(argv.v ? '-v ' : '') + repoToFetch;
+    } else {
+      args = utils.prepareArguments(argv);
+    }
 
-    if (utils.isGitRepo()) {
-      utils.log.info('Fetching ' + ((!branchToFetch) ? 'current': branchToFetch) + ' branch...');
+    cmd = 'git fetch ' + args;
 
-      if (branchToFetch) {
-        args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch;
-      } else if (repoToFetch) {
-        args = + (argv.v ? '-v ' : '') + repoToFetch ;
-      } else {
-        args = utils.prepareArguments(argv);
+    shell.exec(cmd, {
+      silent: true,
+      async: true
+    }, (exitCode, output) => {
+      if (!exitCode) {
+        return done(null, output);
       }
 
-      cmd = 'git fetch ' + args;
-
-      shell.exec(cmd, {
-        silent: true,
-        async: true
-      }, function fetchCompleted(exitCode, output) {
-        if (!exitCode) {
-          return done(null, output);
-        }
-
-        return done(exitCode, output);
-      });
-    } else {
-      return done(true, 'Current directory is not a git repository');
-    }
+      return done(exitCode, output);
+    });
+  } else {
+    return done(true, 'Current directory is not a git repository');
   }
-
-  return {
-    fetch: executeFetch
-  };
-})();
-
-module.exports = GitFetch;
+}
