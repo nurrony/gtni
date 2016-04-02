@@ -10,7 +10,8 @@
     "test": "tape -r babel-register tests/**/*.js | ./node_modules/.bin/tap-spec",
     "lint": "eslint . && echo 'No linting error found'",
     "compile": "babel -d dist/ src/",
-    "preinstall": "echo \"This package depends on git. Please install, if you do not have it yet\""
+    "preinstall": "echo \"This package depends on git. Please install, if you do not have it yet\"",
+    "prepublish": "npm run compile"
   },
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
