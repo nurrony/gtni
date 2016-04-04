@@ -1,1 +1,1 @@
-export const shellConfig = { "fatal": true };
+export const shellConfig = { fatal: true };
