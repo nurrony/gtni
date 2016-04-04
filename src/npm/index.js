@@ -1,4 +1,4 @@
-  import shell from 'shelljs';
+import shell from 'shelljs';
 
 export default function npmInstall(done) {
   const env = process.env.NODE_ENV ? '--' + process.env.NODE_ENV : '';

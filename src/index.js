@@ -16,7 +16,7 @@ import {
 } from './helpers';
 
 /**
- * User defined constiables
+ * User defined constants
  * */
 const errorLog = [];
 const warningLog = [];
@@ -30,11 +30,8 @@ const argv = yargs.usage('Usage: $0 <command> [options]')
   .command('fetch', 'git fetch and install npm dependencies', fetchSubCommands)
   .command('clone', 'clone a git repository and install npm dependencies', cloneSubCommands)
   .demand(1, 'must provide a valid command')
-  .example(
-  '[NODE_ENV=<env>] $0 pull [git-options]',
-  'git pull and install npm packages')
-  .help('h')
-  .alias('h', 'help')
+  .example('[NODE_ENV=<env>] $0 pull [git-options]', 'git pull and install npm packages')
+  .help('h').alias('h', 'help')
   .version(() => 'gtni version ' + require('../package.json').version)
   .argv;
 
@@ -52,7 +49,7 @@ function executeGitOperation(done) {
     case 'clone':
       return gitops.clone(argv, done);
     default:
-      return require('yargs').showHelp();
+      return yargs.showHelp();
   }
 }
 
