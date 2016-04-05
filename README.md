@@ -42,7 +42,6 @@ Todo List
 - [x] Show warnings during `npm` dependencies installation
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
-- [ ] Support for merge options in `git pull`
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
