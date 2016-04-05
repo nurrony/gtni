@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Install your all npm dependencies recursively with gtni while you are doing git clone, fetch or pull",
   "preferGlobal": true,
   "bin": {
