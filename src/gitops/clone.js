@@ -17,21 +17,14 @@ export default function clone(argv, done) {
   }
 
   cmd = 'git clone ' + args + ' ' + repoNPath;
-
-  utils.isExists(clonePath, (err, stat) => {
-    if (err && err.code === 'ENOENT') {
-      utils.log.info('Cloning your repository...');
-      shell.exec(cmd, {
-        silent: true,
-        async: true
-      }, (exitCode, output) => {
-        if (!exitCode) {
-          return done(null, output);
-        }
-        return done(exitCode, output);
-      });
-    } else if (stat.isDirectory()) {
-      return done(true, cloneDirName + ' directory is already exists');
+  utils.log.info('Cloning your repository...');
+  shell.exec(cmd, {
+    silent: true,
+    async: true
+  }, (exitCode, output, errOutput) => {
+    if (!exitCode) {
+      return done(null, output);
     }
+    return done(exitCode, errOutput);
   });
 }

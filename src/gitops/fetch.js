@@ -23,12 +23,12 @@ export default function fetch(argv, done) {
     shell.exec(cmd, {
       silent: true,
       async: true
-    }, (exitCode, output) => {
+    }, (exitCode, output, errOutput) => {
       if (!exitCode) {
         return done(null, output);
       }
 
-      return done(exitCode, output);
+      return done(exitCode, errOutput);
     });
   } else {
     return done(true, 'Current directory is not a git repository');
