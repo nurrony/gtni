@@ -24,11 +24,11 @@ export default function clone(argv, done) {
       shell.exec(cmd, {
         silent: true,
         async: true
-      }, (exitCode, output) => {
+      }, (exitCode, output, errOutput) => {
         if (!exitCode) {
           return done(null, output);
         }
-        return done(exitCode, output);
+        return done(exitCode, errOutput);
       });
     } else if (stat.isDirectory()) {
       return done(true, cloneDirName + ' directory is already exists');
