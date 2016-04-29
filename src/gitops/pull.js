@@ -7,7 +7,7 @@ export default function pull(argv, done) {
   const repoToPull = argv.repo || false;
 
   if (utils.isGitRepo()) {
-    utils.log.info('Pulling ' + ((!branchToPull) ? 'current' : branchToPull) + ' branch...');
+    utils.log.info('pulling ' + ((!branchToPull) ? 'current' : branchToPull) + ' branch...');
 
     if (branchToPull) {
       args = (argv.v ? '-v ' : '') + 'origin ' + branchToPull;

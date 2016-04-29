@@ -17,7 +17,7 @@ export default function clone(argv, done) {
   }
 
   cmd = 'git clone ' + args + ' ' + repoNPath;
-  utils.log.info('Cloning your repository...');
+  utils.log.info('cloning your repository...');
   shell.exec(cmd, {
     silent: true,
     async: true
