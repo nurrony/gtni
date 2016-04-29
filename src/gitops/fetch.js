@@ -8,7 +8,7 @@ export default function fetch(argv, done) {
   const repoToFetch = argv.repo || false;
 
   if (utils.isGitRepo()) {
-    utils.log.info('Fetching ' + ((!branchToFetch) ? 'current' : branchToFetch) + ' branch...');
+    utils.log.info('fetching ' + ((!branchToFetch) ? 'current' : branchToFetch) + ' branch...');
 
     if (branchToFetch) {
       args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch;

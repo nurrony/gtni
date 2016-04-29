@@ -79,7 +79,7 @@ function executeNPMInstall(done) {
         );
       }
 
-      utils.log.info('Installing npm modules for branch ' + branchName + '. It may take some time...');
+      utils.log.info('installing npm modules for branch ' + branchName + ' which may take some time...');
 
       each(packagePaths, (path, cb) => {
         shell.cd(path);
@@ -159,7 +159,7 @@ waterfall([
   }
 
   if (cmdOutput === HAS_WARNING) {
-    utils.log.info('Warnings given by npm during installing dependencies');
+    utils.log.info('warnings given by npm during installing dependencies');
     warningLog.forEach(function iterateWarnings(warning) {
       utils.log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'));
       console.log('');
