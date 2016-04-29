@@ -51,7 +51,7 @@ function listPackageJsonFiles(branch, base, done) {
       '  | grep \'package.json\'', {
         silent: true
       })
-    .output
+    .stdout
     .trim()
     .replace(/(\r\n|\n|\r)/gm, ',')
     .split(',')
@@ -69,19 +69,19 @@ function getRepoName(repoUrl) {
 function isGitRepo() {
   return shell.exec('git rev-parse --is-inside-work-tree', {
     silent: true
-  }).output.trim();
+  }).stdout.trim();
 }
 
 function currentBranchName() {
   return shell.exec('git rev-parse --abbrev-ref HEAD', {
     silent: true
-  }).output.trim();
+  }).stdout.trim();
 }
 
 function checkOutBranch(branch) {
   shell.exec('git checkout ' + branch, {
     silent: true
-  }).output.trim();
+  }).stdout.trim();
   return branch;
 }
 
