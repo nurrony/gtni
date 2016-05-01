@@ -2,7 +2,7 @@ gtni
 ====
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
-[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Build Status][travis-url]][travis-details] [![Maintenance][maintenace-url]][maintenance-url]
+[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch](https://img.shields.io/travis/nmrony/gtni/master.svg?style=flat-square)](https://travis-ci.org/nmrony/gtni) [![Maintenance][maintenace-url]]()
 
 >For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
@@ -52,5 +52,3 @@ Todo List
 [dep-status]: https://david-dm.org/nmrony/gtni#info=dependencies&view=table
 [devdep-status]: https://david-dm.org/nmrony/gtni#info=devDependencies&view=table
 [maintenance-url]: https://img.shields.io/maintenance/yes/2016.svg?style=flat-square
-[travis-url]: https://travis-ci.org/nmrony/gtni.svg?branch=master
-[travis-details]: https://travis-ci.org/nmrony/gtni
