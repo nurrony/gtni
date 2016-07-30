@@ -37,6 +37,11 @@ const argv = yargs.usage('Usage: $0 <command> [options]')
 
 shell.config = shellConfig;
 
+/**
+ * Executes git operation
+ * @param done
+ * @returns {*}
+ */
 function executeGitOperation(done) {
 
   const command = argv._[0];
@@ -53,6 +58,10 @@ function executeGitOperation(done) {
   }
 }
 
+/**
+ * List all package.json for a project and initiate NPM installation for each package.json
+ * @param done
+ */
 function executeNPMInstall(done) {
 
   const currentBranchName = utils.currentBranchName();
@@ -126,7 +135,11 @@ function executeNPMInstall(done) {
     });
 }
 
-
+/**
+ * Install NPM dependencies for a package.json
+ * @param gitOpOutput
+ * @param done
+ */
 function installNPMPackages(gitOpOutput, done) {
 
   const cmd = argv._[0];
