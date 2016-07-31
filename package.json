@@ -13,6 +13,10 @@
     "preinstall": "echo \"This package depends on git. Please install, if you do not have it yet\"",
     "prepublish": "npm run compile"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {

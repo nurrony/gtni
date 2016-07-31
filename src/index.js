@@ -17,7 +17,7 @@ import {
 
 /**
  * User defined constants
- * */
+ */
 const errorLog = []
 const warningLog = []
 const NO_ERROR = 200
@@ -43,9 +43,7 @@ shell.config = shellConfig
  * @returns {*}
  */
 function executeGitOperation (done) {
-
   const command = argv._[ 0 ]
-
   switch (command) {
     case 'pull':
       return gitops.pull(argv, done)
@@ -63,7 +61,6 @@ function executeGitOperation (done) {
  * @param done
  */
 function executeNPMInstall (done) {
-
   const currentBranchName = utils.currentBranchName()
   const checkoutBranchName = (argv.b &&
     typeof argv.b === 'string' &&
@@ -141,7 +138,6 @@ function executeNPMInstall (done) {
  * @param done
  */
 function installNPMPackages (gitOpOutput, done) {
-
   const cmd = argv._[ 0 ]
   let cloneDir = ''
 
@@ -162,7 +158,6 @@ waterfall([
   executeGitOperation,
   installNPMPackages
 ], (err, cmdOutput) => {
-
   if (err === NO_PACKAGE_FOUND) {
     return utils.log.info(cmdOutput)
   }

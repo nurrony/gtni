@@ -1,5 +1,5 @@
-export function pullSubCommands(yargs) {
-  yargs.option({
+export function pullSubCommands (yargs) {
+  return yargs.option({
     branch: {
       alias: 'b',
       type: 'string',
@@ -12,11 +12,11 @@ export function pullSubCommands(yargs) {
       'default': false,
       description: 'The "remote" repository that is the source'
     }
-  }).help('h').alias('h', 'help').argv;
+  }).help('h').alias('h', 'help').argv
 }
 
-export function fetchSubCommands(yargs) {
-  yargs.option({
+export function fetchSubCommands (yargs) {
+  return yargs.option({
     branch: {
       alias: 'b',
       type: 'string',
@@ -29,12 +29,11 @@ export function fetchSubCommands(yargs) {
       'default': false,
       description: 'The "remote" repository that is the source'
     }
-  }).help('h').alias('h', 'help').argv;
+  }).help('h').alias('h', 'help').argv
 }
 
-export function cloneSubCommands(yargs) {
-
-  yargs.option({
+export function cloneSubCommands (yargs) {
+  return yargs.option({
     branch: {
       alias: 'b',
       type: 'string',
@@ -47,5 +46,5 @@ export function cloneSubCommands(yargs) {
       'default': false,
       description: 'verbose '
     }
-  }).help('h').alias('h', 'help').argv;
+  }).help('h').alias('h', 'help').argv
 }
