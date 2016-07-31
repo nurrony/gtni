@@ -15,9 +15,8 @@ import {
   cloneSubCommands
 } from './helpers'
 
-/**
- * User defined constants
- */
+// User defined constants
+
 const errorLog = []
 const warningLog = []
 const NO_ERROR = 200
