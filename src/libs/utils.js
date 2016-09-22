@@ -1,6 +1,6 @@
 import shell from 'shelljs'
 import chalk from 'chalk'
-import omit from 'lodash/omit'
+import omit from 'lodash.omit'
 import map from 'lodash/map'
 import gitUrlParser from 'git-url-parse'
 import fs from 'fs'
