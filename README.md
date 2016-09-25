@@ -27,7 +27,7 @@ Options:
   --version      Show version number                                   [boolean]
 
 Examples:
-  [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
+  [NODE_ENV=<env>] gtni pull [git-options]  #git pull and install npm packages
   
 # Sub command options
 
@@ -36,6 +36,8 @@ Options:
   -h, --help, --help  Show help                                        [boolean]
   --branch, -b        remote branch name to clone      [string] [default: false]
   --verbose, -v       Show verbose output              [boolean] [default: false]
+  
+  Note: here you can pass any flags for the corresponding git command
 
 
 ```
