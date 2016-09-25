@@ -28,6 +28,15 @@ Options:
 
 Examples:
   [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
+  
+# Sub command options
+
+$ gtni <command> -h
+Options:
+  -h, --help, --help  Show help                                        [boolean]
+  --branch, -b        remote branch name to clone      [string] [default: false]
+  --verbose, -v       Show verbose output              [boolean] [default: false]
+
 
 ```
 I need your help to improve this module. Please send me your valuable suggestions and advices. I am all ears.
