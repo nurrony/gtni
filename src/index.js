@@ -31,7 +31,7 @@ const argv = yargs.usage('Usage: $0 <command> [options]')
   .demand(1, 'must provide a valid command')
   .example('[NODE_ENV=<env>] $0 pull [git-options]', 'git pull and install npm packages')
   .help('h').alias('h', 'help')
-  .version(() => 'gtni cli version ' + require('../package.json').version)
+  .version(() => 'gtni version ' + require('../package.json').version)
   .argv
 
 shell.config = shellConfig
