@@ -141,7 +141,7 @@ function installNPMPackages (gitOpOutput, done) {
   let cloneDir = ''
 
   utils.log.success('git ' + cmd + ' ends successfully!!')
-  if (argv.v) {
+  if (argv.d) {
     utils.log.info(gitOpOutput)
   }
 
