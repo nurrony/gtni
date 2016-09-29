@@ -15,6 +15,7 @@ Usage
 ------
 ```sh
 $gtni --help
+
 Usage: gtni <command> [options]
 
 Commands:
@@ -23,19 +24,22 @@ Commands:
   clone  clone a git repository and install npm dependencies
 
 Options:
-  -h, --help     Show help                                             [boolean]
-  --version      Show version number                                   [boolean]
+  -h, --help     Show help  [boolean]
+  -v, --version  Show version number  [boolean]
 
 Examples:
-  [NODE_ENV=<env>] gtni pull [git-options]  #git pull and install npm packages
+  [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
+
+
   
 # Sub command options
 
 $ gtni <command> -h
 Options:
-  -h, --help, --help  Show help                                        [boolean]
-  --branch, -b        remote branch name to clone      [string] [default: false]
-  --verbose, -v       Show verbose output              [boolean] [default: false]
+  -h, --help, --help  Show help  [boolean]
+  --branch, -b        remote branch name to clone  [string] [default: false]
+  --debug, -d         Show debug output  [boolean] [default: false]
+  -v, --version       Show version number  [boolean]
   
   Note: here you can pass any flags for the corresponding git command
 
@@ -53,6 +57,7 @@ Todo List
 - [x] Show warnings during `npm` dependencies installation
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
+- [ ] Add support to pass various ENV variable for `npm install`
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
