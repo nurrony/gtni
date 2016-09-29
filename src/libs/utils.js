@@ -48,7 +48,7 @@ function listPackageJsonFiles (branch, base, done) {
   var listArray
   listArray = shell.exec('git ls-tree -r ' +
     '--name-only ' + branch +
-    '  | grep \'package.json\'', {silent: true})
+    '  | grep \'package.json\'', { silent: true })
     .stdout
     .trim()
     .replace(/(\r\n|\n|\r)/gm, ',')
@@ -90,25 +90,23 @@ function prepareArguments (args) {
     'help',
     '_',
     'b',
+    'debug',
+    'version',
+    'v',
     'branch',
     'repo',
     'repository'
   ])
 
   return map(gitOptions, function appendBasePath (value, key) {
-    if (typeof value === 'boolean') {
-      if (value) {
-        return key.length > 1 ? '--' + key : '-' + key
-      } else {
-        return
-      }
-    }
-
-    if (key.length > 1) {
+    if (typeof value === 'boolean' && value) {
+      if (key === 'd') { key = 'v' }
+      return key.length > 1 ? '--' + key : '-' + key
+    } else if (key.length > 1) {
       return '--' + key + ' ' + value
+    } else {
+      return '-' + key + ' ' + value
     }
-
-    return '-' + key + ' ' + value
   }).join(' ')
 }
 
