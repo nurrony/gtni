@@ -12,12 +12,13 @@ export default function clone (argv, done) {
     (typeof argv._[ 2 ] === 'undefined' ? '' : argv._[ 2 ])
 
   if (argv.b) {
-    args = '-b ' + argv.b + (argv.v ? ' -v' : '')
+    args = '-b ' + argv.b + (argv.d ? ' -v' : '')
   } else {
     args = utils.prepareArguments(argv)
   }
 
   const cmd = 'git clone ' + args + ' ' + repoNPath
+
   utils.log.info('cloning your repository...')
   shell.exec(cmd, {
     silent: true,

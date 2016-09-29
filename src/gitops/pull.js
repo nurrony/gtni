@@ -15,9 +15,9 @@ export default function pull (argv, done) {
     utils.log.info('pulling ' + ((!branchToPull) ? 'current' : branchToPull) + ' branch...')
 
     if (branchToPull) {
-      args = (argv.v ? '-v ' : '') + 'origin ' + branchToPull
+      args = (argv.d ? '-v ' : '') + 'origin ' + branchToPull
     } else if (repoToPull) {
-      args = (argv.v ? '-v ' : '') + repoToPull
+      args = (argv.d ? '-v ' : '') + repoToPull
     } else {
       args = utils.prepareArguments(argv)
     }

@@ -12,11 +12,11 @@ export function pullSubCommands (yargs) {
       'default': false,
       description: 'The "remote" repository that is the source'
     },
-    verbose: {
-      alias: 'v',
+    debug: {
+      alias: 'd',
       type: 'boolean',
       'default': false,
-      description: 'Show verbose output'
+      description: 'Show debug output'
     }
   }).help('h').alias('h', 'help').argv
 }
@@ -35,11 +35,11 @@ export function fetchSubCommands (yargs) {
       'default': false,
       description: 'The "remote" repository that is the source'
     },
-    verbose: {
-      alias: 'v',
+    debug: {
+      alias: 'd',
       type: 'boolean',
       'default': false,
-      description: 'Show verbose output'
+      description: 'Show debug output'
     }
   }).help('h').alias('h', 'help').argv
 }
@@ -52,11 +52,11 @@ export function cloneSubCommands (yargs) {
       'default': false,
       description: 'remote branch name to clone'
     },
-    verbose: {
-      alias: 'v',
+    debug: {
+      alias: 'd',
       type: 'boolean',
       'default': false,
-      description: 'Show verbose output'
+      description: 'Show debug output'
     }
   }).help('h').alias('h', 'help').argv
 }

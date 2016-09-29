@@ -16,9 +16,9 @@ export default function fetch (argv, done) {
     utils.log.info('fetching ' + ((!branchToFetch) ? 'current' : branchToFetch) + ' branch...')
 
     if (branchToFetch) {
-      args = (argv.v ? '-v ' : '') + 'origin ' + branchToFetch
+      args = (argv.d ? '-v ' : '') + 'origin ' + branchToFetch
     } else if (repoToFetch) {
-      args = +(argv.v ? '-v ' : '') + repoToFetch
+      args = +(argv.d ? '-v ' : '') + repoToFetch
     } else {
       args = utils.prepareArguments(argv)
     }
