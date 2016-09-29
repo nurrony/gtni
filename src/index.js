@@ -88,7 +88,7 @@ function executeNPMInstall (done) {
 
     each(packagePaths, (path, cb) => {
       shell.cd(path)
-      return npmInstall((exitCode, output) => {
+      return npmInstall((argv.d ? '-d' : ''), (exitCode, output) => {
         const currentWarning = output.match(/((warn).+)/igm) || []
 
         if (currentWarning && currentWarning.length) {
@@ -102,7 +102,7 @@ function executeNPMInstall (done) {
           errorLog.push(path + 'package.json')
         }
 
-        if (argv.v) {
+        if (argv.d) {
           utils.log.info('Log for ' + path + 'package.json')
           utils.log.info(output)
         }
