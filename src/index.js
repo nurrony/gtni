@@ -31,7 +31,7 @@ const argv = yargs.usage('Usage: $0 <command> [options]')
   .demand(1, 'must provide a valid command')
   .example('[NODE_ENV=<env>] $0 pull [git-options]', 'git pull and install npm packages')
   .help('h').alias('h', 'help')
-  .version(() => 'gtni version ' + require('../package.json').version)
+  .version(() => 'gtni version ' + require('../package.json').version).alias('v', 'version')
   .argv
 
 shell.config = shellConfig
@@ -88,7 +88,7 @@ function executeNPMInstall (done) {
 
     each(packagePaths, (path, cb) => {
       shell.cd(path)
-      return npmInstall((exitCode, output) => {
+      return npmInstall((argv.d ? '-d' : ''), (exitCode, output) => {
         const currentWarning = output.match(/((warn).+)/igm) || []
 
         if (currentWarning && currentWarning.length) {
@@ -102,7 +102,7 @@ function executeNPMInstall (done) {
           errorLog.push(path + 'package.json')
         }
 
-        if (argv.v) {
+        if (argv.d) {
           utils.log.info('Log for ' + path + 'package.json')
           utils.log.info(output)
         }
@@ -141,7 +141,7 @@ function installNPMPackages (gitOpOutput, done) {
   let cloneDir = ''
 
   utils.log.success('git ' + cmd + ' ends successfully!!')
-  if (argv.v) {
+  if (argv.d) {
     utils.log.info(gitOpOutput)
   }
 

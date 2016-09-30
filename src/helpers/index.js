@@ -11,6 +11,12 @@ export function pullSubCommands (yargs) {
       type: 'string',
       'default': false,
       description: 'The "remote" repository that is the source'
+    },
+    debug: {
+      alias: 'd',
+      type: 'boolean',
+      'default': false,
+      description: 'Show debug output'
     }
   }).help('h').alias('h', 'help').argv
 }
@@ -28,6 +34,12 @@ export function fetchSubCommands (yargs) {
       type: 'string',
       'default': false,
       description: 'The "remote" repository that is the source'
+    },
+    debug: {
+      alias: 'd',
+      type: 'boolean',
+      'default': false,
+      description: 'Show debug output'
     }
   }).help('h').alias('h', 'help').argv
 }
@@ -40,11 +52,11 @@ export function cloneSubCommands (yargs) {
       'default': false,
       description: 'remote branch name to clone'
     },
-    verbose: {
-      alias: 'v',
+    debug: {
+      alias: 'd',
       type: 'boolean',
       'default': false,
-      description: 'verbose '
+      description: 'Show debug output'
     }
   }).help('h').alias('h', 'help').argv
 }
