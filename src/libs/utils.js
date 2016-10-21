@@ -99,13 +99,15 @@ function prepareArguments (args) {
   ])
 
   return map(gitOptions, function appendBasePath (value, key) {
+    if (typeof value === 'boolean' && !value) {
+      return
+    }
+
     if (typeof value === 'boolean' && value) {
       if (key === 'd') { key = 'v' }
       return key.length > 1 ? '--' + key : '-' + key
-    } else if (key.length > 1) {
-      return '--' + key + ' ' + value
     } else {
-      return '-' + key + ' ' + value
+      return key.length > 1 ? '--' + key + ' ' + value : '-' + key + ' ' + value
     }
   }).join(' ')
 }
