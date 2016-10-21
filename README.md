@@ -43,7 +43,6 @@ Options:
   
   Note: here you can pass any flags for the corresponding git command
 
-
 ```
 I need your help to improve this module. Please send me your valuable suggestions and advices. I am all ears.
 
@@ -57,7 +56,7 @@ Todo List
 - [x] Show warnings during `npm` dependencies installation
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
-- [ ] Add support to pass various ENV variable for `npm install`
+- [x] Add support to pass custom `NODE_ENV` values for `npm install`
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
