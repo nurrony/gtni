@@ -57,6 +57,7 @@ Todo List
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
 - [x] Add support to pass custom `NODE_ENV` values for `npm install`
+- [ ] Use [Yarn][yarn-url] when available
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
@@ -70,3 +71,4 @@ Todo List
 [maintenance-url]: https://img.shields.io/maintenance/yes/2016.svg?style=flat-square
 [travis-url]: https://travis-ci.org/nmrony/gtni
 [travis-badge]: https://img.shields.io/travis/nmrony/gtni/master.svg?style=flat-square
+[yarn-url]: https://yarnpkg.com/
