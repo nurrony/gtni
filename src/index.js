@@ -80,11 +80,12 @@ function executeNPMInstall (done) {
       )
     }
 
-    utils.log.info('installing npm modules for branch ' + branchName + ' which may take some time...')
+    const yarn = utils.isYarnInstalled()
+    utils.log.info((yarn ? 'yarn' : 'npm') + ' is installing dependencies for branch ' + branchName + ' which may take some time...')
 
     each(packagePaths, (path, cb) => {
       shell.cd(path)
-      return npmInstall(utils.isYarnInstalled(), (argv.d ? '-d' : ''), (exitCode, output) => {
+      return npmInstall(yarn, (argv.d ? '-d' : ''), (exitCode, output) => {
         const currentWarning = output.match(/((warn).+)/igm) || []
 
         if (currentWarning && currentWarning.length) {
@@ -177,5 +178,5 @@ waterfall([
     return utils.log.error(errorLog.join('\r\n'))
   }
 
-  return utils.log.success('npm dependencies installed successfully!!!')
+  return utils.log.success('all dependencies installed successfully!!!')
 })
