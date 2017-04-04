@@ -61,12 +61,8 @@ function executeGitOperation (done) {
  */
 function executeNPMInstall (done) {
   const currentBranchName = utils.currentBranchName()
-  const checkoutBranchName = (argv.b &&
-    typeof argv.b === 'string' &&
-    currentBranchName !== checkoutBranchName
-  ) ? argv.b : false
-
-  const branchName = checkoutBranchName ? utils.checkOutBranch(checkoutBranchName) : currentBranchName
+  const branchToCheckout = (argv.b && typeof argv.b === 'string' && currentBranchName !== argv.b) ? argv.b : false
+  const branchName = branchToCheckout ? utils.checkOutBranch(branchToCheckout) : currentBranchName
 
   utils.log.info('listing all package.json files in this project...')
 
@@ -110,7 +106,7 @@ function executeNPMInstall (done) {
         return cb(false)
       })
     }, (err) => {
-      if (checkoutBranchName) {
+      if (branchToCheckout) {
         utils.checkOutBranch(currentBranchName)
       }
 
