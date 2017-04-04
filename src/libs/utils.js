@@ -25,6 +25,10 @@ function isGitInstalled () {
   return shell.which('git')
 }
 
+function isYarnInstalled () {
+  return shell.which('yarn')
+}
+
 function gotoRootDirectory (done) {
   shell.exec('git rev-parse --show-toplevel', {
     silent: true,
