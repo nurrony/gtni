@@ -138,6 +138,7 @@ const Utils = {
   packagePaths,
   checkOutBranch,
   currentBranchName,
+  isYarnInstalled,
   isExists: fs.stat
 }
 
