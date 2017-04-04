@@ -31,7 +31,7 @@ Examples:
   [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
 
 
-  
+
 # Sub command options
 
 $ gtni <command> -h
@@ -40,7 +40,7 @@ Options:
   --branch, -b        remote branch name to clone  [string] [default: false]
   --debug, -d         Show debug output  [boolean] [default: false]
   -v, --version       Show version number  [boolean]
-  
+
   Note: here you can pass any flags for the corresponding git command
 
 ```
@@ -52,12 +52,12 @@ Todo List
 - [x] Pull support for most used `git pull` options
 - [x] Fetch support for most used `git fetch` options
 - [x] Support for `git clone`
-- [x] `NODE_ENV` support for `npm install`
-- [x] Show warnings during `npm` dependencies installation
+- [x] `NODE_ENV` support for `npm/yarn install`
+- [x] Show warnings during dependencies installation
 - [x] Support for read and install dependencies when project has multiple `package.json` files
 - [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
 - [x] Add support to pass custom `NODE_ENV` values for `npm install`
-- [ ] Use [Yarn][yarn-url] when available
+- [x] Use [Yarn][yarn-url] when available
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
