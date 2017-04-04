@@ -2,7 +2,7 @@ gtni
 ====
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
-[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Maintenance][maintenance-url]][github-url]
+[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url]
 
 >For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
@@ -10,6 +10,8 @@ Installation
 -------------
 ```sh
 [sudo] npm install -g gtni
+# or
+[sudo] yarn global add gtni
 ```
 Usage
 ------
@@ -68,7 +70,6 @@ Todo List
 [github-url]: https://github.com/nmrony/gtni
 [dep-status]: https://david-dm.org/nmrony/gtni#info=dependencies&view=table
 [devdep-status]: https://david-dm.org/nmrony/gtni#info=devDependencies&view=table
-[maintenance-url]: https://img.shields.io/maintenance/yes/2016.svg?style=flat-square
 [travis-url]: https://travis-ci.org/nmrony/gtni
 [travis-badge]: https://img.shields.io/travis/nmrony/gtni/master.svg?style=flat-square
 [yarn-url]: https://yarnpkg.com/
