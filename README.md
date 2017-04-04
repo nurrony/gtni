@@ -6,6 +6,8 @@ Install your npm dependencies recursively with gtni as soon you pull, fetch or c
 
 >For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
+`gtni` uses `yarn` (when available) to install dependencies on your machine.
+
 Installation
 -------------
 ```sh
