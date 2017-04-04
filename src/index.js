@@ -84,7 +84,7 @@ function executeNPMInstall (done) {
 
     each(packagePaths, (path, cb) => {
       shell.cd(path)
-      return npmInstall((argv.d ? '-d' : ''), (exitCode, output) => {
+      return npmInstall(utils.isYarnInstalled(), (argv.d ? '-d' : ''), (exitCode, output) => {
         const currentWarning = output.match(/((warn).+)/igm) || []
 
         if (currentWarning && currentWarning.length) {
