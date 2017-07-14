@@ -103,8 +103,8 @@ function executeNPMInstall (done) {
           utils.log.info('Log for ' + path + 'package.json')
           utils.log.info(output)
         }
-
-        return cb(false)
+        const err = false
+        return cb(err)
       })
     }, (err) => {
       if (branchToCheckout) {
