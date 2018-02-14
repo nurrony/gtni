@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 # gtni
 
+=======
+gtni
+====
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/nmrony/gtni.svg)](https://greenkeeper.io/)
+>>>>>>> docs(readme): add Greenkeeper badge
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
 [![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Greenkeeper badge][gk-badge]][gk-url]
