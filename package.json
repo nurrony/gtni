@@ -7,18 +7,20 @@
     "gtni": "dist/index.js"
   },
   "scripts": {
-    "test": "tape -r babel-register tests/**/*.js | ./node_modules/.bin/tap-spec",
+    "test": "tape -r @babel/register tests/**/*.js | ./node_modules/.bin/tap-spec",
     "lint": "eslint . && echo 'No linting error found'",
     "compile": "babel -d dist/ src/",
-    "preinstall": "echo 'This package depends on git. Please install, if you do not have it yet'"
+    "preinstall": "echo '\r\nThis package depends on git. Please install, if you do not have it yet\r\n'"
   },
-  "pre-commit": [
-    "lint",
-    "test"
-  ],
-  "author": "Nur Mohammed Rony<pro.nmrony@gmail.com>",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test"
+    }
+  },
+  "author": "Nur Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0-beta.40",
     "async-waterfall": "^0.1.5",
     "chalk": "^2.3.1",
     "git-url-parse": "^8.1.0",
@@ -28,6 +30,20 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.40",
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/register": "^7.0.0-beta.40",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.18.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
+    "tap-spec": "^4.1.1",
     "tape": "^4.9.0"
   },
   "repository": {
