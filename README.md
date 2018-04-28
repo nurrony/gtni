@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 # gtni
 
-=======
-gtni
-====
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/nmrony/gtni.svg)](https://greenkeeper.io/)
->>>>>>> docs(readme): add Greenkeeper badge
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
-[![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Greenkeeper badge][gk-badge]][gk-url]
+[![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Greenkeeper badge][gk-badge]][gk-url] [![semantic-release][sembadge]][npm-url]
 
 > For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
@@ -83,3 +76,4 @@ I need your help to improve this module. Please send me your valuable suggestion
 [yarn-url]: https://yarnpkg.com/
 [gk-badge]: https://badges.greenkeeper.io/nmrony/gtni.svg
 [gk-url]: https://greenkeeper.io/
+[sembadge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
