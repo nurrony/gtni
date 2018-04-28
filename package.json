@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "1.4.1",
+  "version": "0.0.0-development",
   "description": "Install your all npm dependencies recursively with gtni while you are doing git clone, fetch or pull",
   "preferGlobal": true,
   "bin": {
@@ -10,7 +10,9 @@
     "test": "tape -r @babel/register tests/**/*.js | ./node_modules/.bin/tap-spec",
     "lint": "eslint . && echo 'No linting error found'",
     "compile": "babel -d dist/ src/",
-    "preinstall": "echo '\r\nThis package depends on git. Please install, if you do not have it yet\r\n'"
+    "preinstall": "echo '\r\nThis package depends on git. Please install, if you do not have it yet\r\n'",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "husky": {
     "hooks": {
@@ -43,17 +45,26 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "husky": "^0.14.3",
+    "semantic-release": "^15.1.7",
     "tap-spec": "^4.1.1",
-    "tape": "^4.9.0"
+    "tape": "^4.9.0",
+    "travis-deploy-once": "^4.4.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nmrony/gtni.git"
+    "url": "https://github.com/nmrony/gtni.git"
   },
   "bugs": {
     "url": "https://github.com/nmrony/gtni/issues",
     "email": "pro.nmrony@gmail.com"
   },
   "homepage": "https://nmrony.github.io/gtni",
-  "keywords": ["git", "npm", "git push", "git fetch", "git pull", "npm install"]
+  "keywords": [
+    "git",
+    "npm",
+    "git push",
+    "git fetch",
+    "git pull",
+    "npm install"
+  ]
 }
