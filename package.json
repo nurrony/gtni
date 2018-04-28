@@ -9,6 +9,7 @@
   "scripts": {
     "test": "tape -r @babel/register tests/**/*.js | ./node_modules/.bin/tap-spec",
     "lint": "eslint . && echo 'No linting error found'",
+    "commit": "git-cz",
     "compile": "babel -d dist/ src/",
     "preinstall": "echo '\r\nThis package depends on git. Please install, if you do not have it yet\r\n'",
     "travis-deploy-once": "travis-deploy-once",
@@ -19,12 +20,19 @@
       "pre-commit": "npm run lint && npm run test"
     }
   },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "author": "Nur Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.46",
     "async-waterfall": "^0.1.5",
     "chalk": "^2.4.1",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "git-url-parse": "^9.0.0",
     "lodash.map": "^4.6.0",
     "lodash.omit": "^4.5.0",
