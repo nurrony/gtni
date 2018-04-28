@@ -67,5 +67,12 @@
     "email": "pro.nmrony@gmail.com"
   },
   "homepage": "https://nmrony.github.io/gtni",
-  "keywords": ["git", "npm", "git push", "git fetch", "git pull", "npm install"]
+  "keywords": [
+    "git",
+    "npm",
+    "git push",
+    "git fetch",
+    "git pull",
+    "npm install"
+  ]
 }
