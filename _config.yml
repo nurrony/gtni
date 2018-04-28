@@ -1,8 +1,0 @@
-title: gtni
-description: Install your npm dependencies with gtni with git clone, fetch and pull
-google_analytics:
-show_downloads: true
-theme: jekyll-theme-cayman
-
-gems:
-  - jekyll-mentions
