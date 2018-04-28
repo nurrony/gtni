@@ -1,6 +1,6 @@
 {
   "name": "gtni",
-  "version": "0.0.0-development",
+  "version": "0.0.0-semantic-release",
   "description": "Install your all npm dependencies recursively with gtni while you are doing git clone, fetch or pull",
   "preferGlobal": true,
   "bin": {
@@ -59,12 +59,5 @@
     "email": "pro.nmrony@gmail.com"
   },
   "homepage": "https://nmrony.github.io/gtni",
-  "keywords": [
-    "git",
-    "npm",
-    "git push",
-    "git fetch",
-    "git pull",
-    "npm install"
-  ]
+  "keywords": ["git", "npm", "git push", "git fetch", "git pull", "npm install"]
 }
