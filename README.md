@@ -1,22 +1,23 @@
-gtni
-====
+# gtni
+
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
-[![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url]
+[![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Greenkeeper badge][gk-badge]][gk-url]
 
->For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
+> For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
 `gtni` uses `yarn` (when available) to install dependencies on your machine.
 
-Installation
--------------
+## Installation
+
 ```sh
 [sudo] npm install -g gtni
 # or
 [sudo] yarn global add gtni
 ```
-Usage
-------
+
+## Usage
+
 ```sh
 $gtni --help
 
@@ -46,22 +47,22 @@ Options:
   -v, --version       Show version number  [boolean]
 
   Note: here you can pass any flags for the corresponding git command
-
 ```
+
 I need your help to improve this module. Please send me your valuable suggestions and advices. I am all ears.
 
-Todo List
----------
-- [x] Very basic stage of pull support
-- [x] Pull support for most used `git pull` options
-- [x] Fetch support for most used `git fetch` options
-- [x] Support for `git clone`
-- [x] `NODE_ENV` support for `npm/yarn install`
-- [x] Show warnings during dependencies installation
-- [x] Support for read and install dependencies when project has multiple `package.json` files
-- [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
-- [x] Add support to pass custom `NODE_ENV` values for `npm install`
-- [x] Use [Yarn][yarn-url] when available
+## Todo List
+
+* [x] Very basic stage of pull support
+* [x] Pull support for most used `git pull` options
+* [x] Fetch support for most used `git fetch` options
+* [x] Support for `git clone`
+* [x] `NODE_ENV` support for `npm/yarn install`
+* [x] Show warnings during dependencies installation
+* [x] Support for read and install dependencies when project has multiple `package.json` files
+* [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
+* [x] Add support to pass custom `NODE_ENV` values for `npm install`
+* [x] Use [Yarn][yarn-url] when available
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
@@ -70,8 +71,8 @@ Todo List
 [npm-total-downloads]: https://img.shields.io/npm/dm/gtni.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/gtni
 [github-url]: https://github.com/nmrony/gtni
-[dep-status]: https://david-dm.org/nmrony/gtni#info=dependencies&view=table
-[devdep-status]: https://david-dm.org/nmrony/gtni#info=devDependencies&view=table
 [travis-url]: https://travis-ci.org/nmrony/gtni
 [travis-badge]: https://img.shields.io/travis/nmrony/gtni/master.svg?style=flat-square
 [yarn-url]: https://yarnpkg.com/
+[gk-badge]: https://badges.greenkeeper.io/nmrony/gtni.svg
+[gk-url]: https://greenkeeper.io/
