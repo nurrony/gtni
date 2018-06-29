@@ -35,7 +35,7 @@
     "lodash.map": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "shelljs": "^0.8.1",
-    "yargs": "^11.0.0"
+    "yargs": "^12.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.46",
