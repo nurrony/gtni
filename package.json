@@ -31,7 +31,7 @@
     "@babel/polyfill": "^7.0.0-beta.46",
     "async-waterfall": "^0.1.5",
     "chalk": "^2.4.1",
-    "git-url-parse": "^9.0.0",
+    "git-url-parse": "^10.0.1",
     "lodash.map": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "shelljs": "^0.8.1",
