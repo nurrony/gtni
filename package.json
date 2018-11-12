@@ -35,7 +35,7 @@
     "lodash.map": "^4.6.0",
     "lodash.omit": "^4.5.0",
     "shelljs": "^0.8.1",
-    "yargs": "^11.0.0"
+    "yargs": "^12.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.46",
@@ -44,10 +44,10 @@
     "@babel/preset-env": "^7.0.0-beta.46",
     "@babel/register": "^7.0.0-beta.46",
     "babel-eslint": "^8.2.3",
-    "commitizen": "^2.9.6",
+    "commitizen": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
