@@ -14,3 +14,12 @@ npm-debug.log
 src
 .idea
 yarn.lock
+.vscode
+.eslintrc
+.editorconfig
+.babelrc
+.gitignore
+.travis.yml
+index.md
+tests
+.eslintignore
