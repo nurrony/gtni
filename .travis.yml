@@ -7,7 +7,7 @@ node_js:
 before_install: npm install --global greenkeeper-lockfile@1
 before_script:
   - greenkeeper-lockfile-update
-  - npm run compile
+  - npm run build
 after_script:
   - git diff --color | cat
   - greenkeeper-lockfile-upload

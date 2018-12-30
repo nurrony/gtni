@@ -1,18 +1,20 @@
 {
   "name": "gtni",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.0-development",
   "description": "Install your all npm dependencies recursively with gtni while you are doing git clone, fetch or pull",
   "preferGlobal": true,
   "bin": {
     "gtni": "dist/index.js"
   },
   "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -fr dist/",
     "test": "tape -r @babel/register tests/**/*.js | ./node_modules/.bin/tap-spec",
     "code:quality": "npm run lint && npm run test",
     "lint": "eslint . && echo 'No lint error found'",
     "lint:fix": "eslint . --fix",
     "commit": "git-cz",
-    "compile": "babel -d dist/ src/",
+    "compile": "babel --minified --no-comments -d dist/ src/",
     "preinstall": "echo '\r\nThis package depends on git. Please install, if you do not have it yet\r\n'",
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release"
