@@ -2,6 +2,7 @@
 
 import each from 'async-each'
 import waterfall from 'async-waterfall'
+import ora from 'ora'
 import shell from 'shelljs'
 import yargs from 'yargs'
 import gitops from './gitops'
@@ -9,7 +10,6 @@ import { cloneSubCommands, fetchSubCommands, pullSubCommands } from './helpers'
 import { checkOutBranch, currentBranchName, detectPackageManager, getRepoName, log, packagePaths } from './libs/utils'
 import npmInstall from './npm'
 import shellConfig from './shellconfig'
-
 // User defined constants
 const errorLog = []
 const warningLog = []
@@ -39,6 +39,7 @@ shell.config = shellConfig
  */
 function executeGitOperation (done) {
   const command = argv._[0]
+  console.log()
   switch (command) {
     case 'pull':
       return gitops.pull(argv, done)
@@ -59,23 +60,21 @@ function executeNPMInstall (done) {
   const activeBranchName = currentBranchName()
   const branchToCheckout = argv.b && typeof argv.b === 'string' && activeBranchName !== argv.b ? argv.b : false
   const branchName = branchToCheckout ? checkOutBranch(branchToCheckout) : activeBranchName
-
-  log.info('listing all package.json files in this project...')
-
+  const listSpinner = ora('Listing all package.json files in this project').start()
+  const npmInstallSpinner = ora()
   packagePaths(branchName, (error, packagePaths) => {
     if (error) {
+      listSpinner.fail('Listing package.json is not successful.')
       return done(error)
     }
 
     // is there any package.json?
     if (!packagePaths.length) {
-      return done(
-        NO_PACKAGE_FOUND,
-        'No package.json not found in your project. ' + 'Skipping dependency installation.'
-      )
+      listSpinner.info('No package.json is found in your project. Skipping dependency installation.')
+      return done(NO_PACKAGE_FOUND)
     }
-
-    log.info(`installing dependencies for branch ${branchName}`)
+    listSpinner.succeed(`Found ${packagePaths.length} package.json files.`)
+    npmInstallSpinner.start(`Installing dependencies for branch ${branchName}`)
     each(
       packagePaths,
       (path, cb) => {
@@ -97,6 +96,7 @@ function executeNPMInstall (done) {
             }
 
             if (argv.d) {
+              console.log('')
               log.info('Log for ' + path + 'package.json')
               log.info(output)
             }
@@ -117,13 +117,18 @@ function executeNPMInstall (done) {
         }
 
         if (warningLog.length) {
+          npmInstallSpinner.warn('Warnings given by npm during installing dependencies')
           return done(null, HAS_WARNING)
         }
 
         if (errorLog.length) {
+          npmInstallSpinner.fail(
+            'Error given by package manager during installing dependencies. Please check npm-debug.log under given directory'
+          )
           return done(null, HAS_ERROR)
         }
 
+        npmInstallSpinner.succeed('Dependencies are installed successfully.')
         return done(null, NO_ERROR)
       }
     )
@@ -139,7 +144,6 @@ function installNPMPackages (gitOpOutput, done) {
   const cmd = argv._[0]
   let cloneDir = ''
 
-  log.success('git ' + cmd + ' ends successfully!!')
   if (argv.d) {
     log.info(gitOpOutput)
   }
@@ -162,7 +166,6 @@ waterfall([executeGitOperation, installNPMPackages], (err, cmdOutput) => {
   }
 
   if (cmdOutput === HAS_WARNING) {
-    log.info('warnings given by npm during installing dependencies')
     warningLog.forEach(function iterateWarnings (warning) {
       log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'))
       console.log('')
@@ -170,10 +173,7 @@ waterfall([executeGitOperation, installNPMPackages], (err, cmdOutput) => {
   }
 
   if (cmdOutput === HAS_ERROR) {
-    log.info(`npm modules installation has finished with error(s).
-    Please check npm-debug.log file in reported package.json directory`)
     return log.error(errorLog.join('\r\n'))
   }
-
-  return log.success('all dependencies installed successfully!!!')
+  console.log()
 })

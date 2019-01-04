@@ -1,6 +1,6 @@
+import ora from 'ora'
 import shell from 'shelljs'
-import { isGitRepo, log, prepareArguments } from './../libs/utils'
-
+import { isGitRepo, prepareArguments } from './../libs/utils'
 /**
  * Build fetch operation arguments and runs it
  * @param {Object} argv Arguments passed by user
@@ -8,13 +8,11 @@ import { isGitRepo, log, prepareArguments } from './../libs/utils'
  */
 export default function fetch (argv, done) {
   let args = ''
-  let cmd = ''
   const branchToFetch = argv.b || false
   const repoToFetch = argv.repo || false
 
   if (isGitRepo()) {
-    log.info(`fetching ${!branchToFetch ? 'current' : branchToFetch} branch...`)
-
+    const spinner = ora(`Fetching ${!branchToFetch ? 'current' : branchToFetch} branch.`).start()
     if (branchToFetch) {
       args = (argv.d ? '-v ' : '') + 'origin ' + branchToFetch
     } else if (repoToFetch) {
@@ -23,19 +21,18 @@ export default function fetch (argv, done) {
       args = prepareArguments(argv)
     }
 
-    cmd = 'git fetch ' + args
-
     shell.exec(
-      cmd,
+      `git fetch ${args}`,
       {
         silent: true,
         async: true
       },
       (exitCode, output, errOutput) => {
         if (!exitCode) {
+          spinner.succeed(`Fetching ${!branchToFetch ? 'current' : branchToFetch} branch is successful.`)
           return done(null, output)
         }
-
+        spinner.fail(`Fetching ${!branchToFetch ? 'current' : branchToFetch} branch is failed.`)
         return done(exitCode, errOutput)
       }
     )
