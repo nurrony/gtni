@@ -1,12 +1,10 @@
 # gtni
 
-Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
+Install your npm dependencies recursively with gtni as soon you clone, fetch or pull a git repo.
 
 [![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Greenkeeper badge][gk-badge]][gk-url] [![semantic-release][sembadge]][npm-url]
 
-> For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
-
-`gtni` uses `yarn` (when available) to install dependencies on your machine.
+> **gtni** automatically choose right package manager for a git repository based on lock file in a directory with `package.json`.
 
 ## Installation
 
@@ -53,16 +51,16 @@ I need your help to improve this module. Please send me your valuable suggestion
 
 ## Todo List
 
-* [x] Very basic stage of pull support
-* [x] Pull support for most used `git pull` options
-* [x] Fetch support for most used `git fetch` options
-* [x] Support for `git clone`
-* [x] `NODE_ENV` support for `npm/yarn install`
-* [x] Show warnings during dependencies installation
-* [x] Support for read and install dependencies when project has multiple `package.json` files
-* [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
-* [x] Add support to pass custom `NODE_ENV` values for `npm install`
-* [x] Use [Yarn][yarn-url] when available
+- [x] Very basic stage of pull support
+- [x] Pull support for most used `git pull` options
+- [x] Fetch support for most used `git fetch` options
+- [x] Support for `git clone`
+- [x] `NODE_ENV` support for `npm/yarn install`
+- [x] Show warnings during dependencies installation
+- [x] Support for read and install dependencies when project has multiple `package.json` files
+- [x] Install npm modules diffing `git tree` for various branch after doing git operations supported by `gtni`
+- [x] Add support to pass custom `NODE_ENV` values for `npm install`
+- [x] Choose right package manager automatically for a repository
 
 [npm-badge]: https://nodei.co/npm/gtni.png?compact=true
 [npm-version]: https://img.shields.io/npm/v/gtni.svg?style=flat-square
