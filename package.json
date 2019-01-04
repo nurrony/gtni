@@ -37,9 +37,9 @@
     "async-waterfall": "^0.1.5",
     "chalk": "^2.4.1",
     "git-url-parse": "^11.1.1",
-    "inquirer": "^6.2.1",
     "lodash.map": "^4.6.0",
     "lodash.omit": "^4.5.0",
+    "path-exists": "^3.0.0",
     "shelljs": "^0.8.3",
     "yargs": "7.1.0"
   },

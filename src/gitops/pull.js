@@ -1,5 +1,5 @@
 import shell from 'shelljs'
-import utils from './../libs/utils'
+import { isGitRepo, log, prepareArguments } from './../libs/utils'
 
 /**
  * Build pull operation arguments and runs it
@@ -11,27 +11,31 @@ export default function pull (argv, done) {
   const branchToPull = argv.b || false
   const repoToPull = argv.repo || false
 
-  if (utils.isGitRepo()) {
-    utils.log.info('pulling ' + ((!branchToPull) ? 'current' : branchToPull) + ' branch...')
+  if (isGitRepo()) {
+    log.info(`pulling ${!branchToPull ? 'current' : branchToPull} branch...`)
 
     if (branchToPull) {
       args = (argv.d ? '-v ' : '') + 'origin ' + branchToPull
     } else if (repoToPull) {
       args = (argv.d ? '-v ' : '') + repoToPull
     } else {
-      args = utils.prepareArguments(argv)
+      args = prepareArguments(argv)
     }
 
-    shell.exec('git pull ' + args, {
-      silent: true,
-      async: true
-    }, (exitCode, output, errOutput) => {
-      if (!exitCode) {
-        return done(null, output)
-      }
+    shell.exec(
+      'git pull ' + args,
+      {
+        silent: true,
+        async: true
+      },
+      (exitCode, output, errOutput) => {
+        if (!exitCode) {
+          return done(null, output)
+        }
 
-      return done(exitCode, errOutput)
-    })
+        return done(exitCode, errOutput)
+      }
+    )
   } else {
     return done(true, 'Current directory is not a git repository')
   }

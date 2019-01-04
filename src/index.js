@@ -6,12 +6,11 @@ import shell from 'shelljs'
 import yargs from 'yargs'
 import gitops from './gitops'
 import { cloneSubCommands, fetchSubCommands, pullSubCommands } from './helpers'
-import utils from './libs/utils'
+import { checkOutBranch, currentBranchName, detectPackageManager, getRepoName, log, packagePaths } from './libs/utils'
 import npmInstall from './npm'
 import shellConfig from './shellconfig'
 
 // User defined constants
-
 const errorLog = []
 const warningLog = []
 const NO_ERROR = 200
@@ -57,13 +56,13 @@ function executeGitOperation (done) {
  * @param done
  */
 function executeNPMInstall (done) {
-  const currentBranchName = utils.currentBranchName()
-  const branchToCheckout = argv.b && typeof argv.b === 'string' && currentBranchName !== argv.b ? argv.b : false
-  const branchName = branchToCheckout ? utils.checkOutBranch(branchToCheckout) : currentBranchName
+  const activeBranchName = currentBranchName()
+  const branchToCheckout = argv.b && typeof argv.b === 'string' && activeBranchName !== argv.b ? argv.b : false
+  const branchName = branchToCheckout ? checkOutBranch(branchToCheckout) : activeBranchName
 
-  utils.log.info('listing all package.json files in this project...')
+  log.info('listing all package.json files in this project...')
 
-  utils.packagePaths(branchName, (error, packagePaths) => {
+  packagePaths(branchName, (error, packagePaths) => {
     if (error) {
       return done(error)
     }
@@ -76,15 +75,12 @@ function executeNPMInstall (done) {
       )
     }
 
-    const yarn = utils.isYarnInstalled()
-    utils.log.info(
-      (yarn ? 'yarn' : 'npm') + ' is installing dependencies for branch ' + branchName + ' which may take some time...'
-    )
-
+    log.info(`installing dependencies for branch ${branchName}`)
     each(
       packagePaths,
       (path, cb) => {
         shell.cd(path)
+        const yarnLockExists = detectPackageManager(path)
         return npmInstall(
           (exitCode, output) => {
             const currentWarning = output.match(/((warn).+)/gim) || []
@@ -101,18 +97,19 @@ function executeNPMInstall (done) {
             }
 
             if (argv.d) {
-              utils.log.info('Log for ' + path + 'package.json')
-              utils.log.info(output)
+              log.info('Log for ' + path + 'package.json')
+              log.info(output)
             }
             const err = false
             return cb(err)
           },
-          argv.d ? '-d' : ''
+          argv.d ? '-d' : '',
+          yarnLockExists
         )
       },
       err => {
         if (branchToCheckout) {
-          utils.checkOutBranch(currentBranchName)
+          checkOutBranch(activeBranchName)
         }
 
         if (err) {
@@ -142,13 +139,13 @@ function installNPMPackages (gitOpOutput, done) {
   const cmd = argv._[0]
   let cloneDir = ''
 
-  utils.log.success('git ' + cmd + ' ends successfully!!')
+  log.success('git ' + cmd + ' ends successfully!!')
   if (argv.d) {
-    utils.log.info(gitOpOutput)
+    log.info(gitOpOutput)
   }
 
   if (cmd === 'clone') {
-    cloneDir = argv._[2] || utils.getRepoName(argv._[1])
+    cloneDir = argv._[2] || getRepoName(argv._[1])
     shell.cd(cloneDir + '/')
   }
 
@@ -157,30 +154,26 @@ function installNPMPackages (gitOpOutput, done) {
 
 waterfall([executeGitOperation, installNPMPackages], (err, cmdOutput) => {
   if (err === NO_PACKAGE_FOUND) {
-    return utils.log.info(cmdOutput)
+    return log.info(cmdOutput)
   }
 
   if (err) {
-    return utils.log.error(cmdOutput)
+    return log.error(cmdOutput)
   }
 
   if (cmdOutput === HAS_WARNING) {
-    utils.log.info('warnings given by npm during installing dependencies')
+    log.info('warnings given by npm during installing dependencies')
     warningLog.forEach(function iterateWarnings (warning) {
-      utils.log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'))
+      log.warn(warning.packagePath + '\r\n' + warning.messages.join('\r\n'))
       console.log('')
     })
   }
 
   if (cmdOutput === HAS_ERROR) {
-    utils.log.info(
-      'npm modules installation ' +
-        'has finished with error(s). ' +
-        'Please check npm-debug.log file in ' +
-        'reported package.json directory'
-    )
-    return utils.log.error(errorLog.join('\r\n'))
+    log.info(`npm modules installation has finished with error(s).
+    Please check npm-debug.log file in reported package.json directory`)
+    return log.error(errorLog.join('\r\n'))
   }
 
-  return utils.log.success('all dependencies installed successfully!!!')
+  return log.success('all dependencies installed successfully!!!')
 })
