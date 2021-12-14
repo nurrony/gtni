@@ -2,7 +2,7 @@
 
 Install your npm dependencies recursively with gtni as soon you clone, fetch or pull a git repo.
 
-[![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Greenkeeper badge][gk-badge]][gk-url] [![semantic-release][sembadge]][npm-url]
+[![version][npm-version]][npm-url] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![Known Vulnerabilities][snyk-badge]][snyk-url] [![semantic-release][sembadge]][npm-url]
 
 > **gtni** automatically choose right package manager for a git repository based on lock file in a directory with `package.json`.
 
@@ -72,6 +72,6 @@ I need your help to improve this module. Please send me your valuable suggestion
 [travis-url]: https://travis-ci.org/nmrony/gtni
 [travis-badge]: https://img.shields.io/travis/nmrony/gtni/master.svg?style=flat-square
 [yarn-url]: https://yarnpkg.com/
-[gk-badge]: https://badges.greenkeeper.io/nmrony/gtni.svg
-[gk-url]: https://greenkeeper.io/
+[snyk-badge]: https://snyk.io/test/github/nmrony/gtni/badge.svg
+[snyk-url]: https://snyk.io/test/github/nmrony/gtni
 [sembadge]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
