@@ -40,7 +40,7 @@
     "lodash.omit": "^4.5.0",
     "ora": "^4.0.3",
     "path-exists": "^3.0.0",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "yargs": "7.1.0"
   },
   "devDependencies": {
