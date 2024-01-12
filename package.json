@@ -32,7 +32,7 @@
   "author": "Nur Rony<pro.nmrony@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "^7.2.5",
+    "@babel/polyfill": "^7.12.1",
     "async-each": "^1.0.1",
     "async-waterfall": "^0.1.5",
     "git-url-parse": "^11.1.1",
