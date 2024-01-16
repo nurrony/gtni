@@ -1,0 +1,16 @@
+{
+  "author": {
+    "email": "pro.nmrony@gmail.com",
+    "name": "Nur Rony",
+    "url": "https://nurrony.github.io"
+  },
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "gtni",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}
