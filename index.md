@@ -1,18 +1,19 @@
-gtni
-====
+# gtni
+
 Install your npm dependencies recursively with gtni as soon you pull, fetch or clone a git repo.
 
 [![version][npm-version]][npm-url] [![dependencies][npm-dependencies]][dep-status] [![devDependencies][npm-dev-dependencies]][devdep-status] [![Downloads][npm-total-downloads]][npm-url] [![Travis branch][travis-badge]][travis-url] [![maintenance][maintenance-url]][github-url]
 
->For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
+> For full features list, please check [Todo List](#todo-list) below. Keep an eye on github for updated feature list
 
-Installation
--------------
+## Installation
+
 ```sh
 [sudo] npm install -g gtni
 ```
-Usage
-------
+
+## Usage
+
 ```sh
 $gtni --help
 Usage: gtni <command> [options]
@@ -30,10 +31,11 @@ Examples:
   [NODE_ENV=<env>] gtni pull [git-options]  git pull and install npm packages
 
 ```
+
 I need your help to improve this module. Please send me your valuable suggestions and advices. I am all ears.
 
-Todo List
----------
+## Todo List
+
 - [x] Very basic stage of pull support
 - [x] Pull support for most used `git pull` options
 - [x] Fetch support for most used `git fetch` options

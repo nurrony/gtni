@@ -4,8 +4,19 @@
     "name": "Nur Rony",
     "url": "https://nurrony.github.io"
   },
-  "description": "",
-  "keywords": [],
+  "description": "Install your npm dependencies recursively with gtni as soon you clone, fetch or pull a git repo.",
+  "keywords": [
+    "git",
+    "clone",
+    "fetch",
+    "pull",
+    "npm",
+    "install",
+    "git pull",
+    "git clone",
+    "git fetch",
+    "npm install"
+  ],
   "license": "MIT",
   "main": "index.js",
   "name": "gtni",
